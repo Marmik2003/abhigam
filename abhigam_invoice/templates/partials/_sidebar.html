@@ -70,8 +70,8 @@
   </li>
 
   <li class="nav-item">
-    <a href="" 
-    {% if 'color_manager' in request.path %}
+    <a href="{% url 'all_pt_prof' %}" 
+    {% if 'all_patient_profile' in request.path %}
     class="nav-link active"
     {% else %}
     class="nav-link"
@@ -85,8 +85,8 @@
   </li>
 
   <li class="nav-item">
-    <a href="" 
-    {% if 'color_manager' in request.path %}
+    <a href="{% url 'bill_generator' %}" 
+    {% if 'bill_generator' in request.path %}
     class="nav-link active"
     {% else %}
     class="nav-link"
@@ -100,8 +100,8 @@
   </li>
 
   <li class="nav-item">
-    <a href="" 
-    {% if 'color_manager' in request.path %}
+    <a href="{% url 'reference_report' %}" 
+    {% if 'reference_report' in request.path %}
     class="nav-link active"
     {% else %}
     class="nav-link"

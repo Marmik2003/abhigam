@@ -33,6 +33,15 @@ def pt_d_exp(request):
 def ind_pt_prof(request):
     return render(request, 'ind_pt_prof.html')
 
+def all_pt_prof(request):
+    return render(request, 'all_pt_prof.html')
+
+def bill_generator(request):
+    return render(request, 'bill_generator.html')
+
+def reference_report(request):
+    return render(request,'reference_report.html')
+
 def invoice_maker(request):
     if request.method != 'POST':
         return render(request, 'invoice_maker.html')
