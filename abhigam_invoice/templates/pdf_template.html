@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice</title>
+</head>
+<body>
+    <h1>Abhigam Hospital</h1>
+    <br>
+    <h5><b>Patient's name :</b></h5> {{patient_name}}
+    <br>
+    <h5><b>Admit Date :</b></h5> {{admit_date}} <br>
+    <h5><b>Discharge Date :</b></h5> {{discharge_date}} <br>
+    <h5><b>Days :</b></h5> {{days}} <br>
+    <h5><b>Charges per Day :</b></h5> {{cpd}} <br>
+    <h5><b>Physician's visits :</b></h5> {{phy_visit}} <br>
+    <table border="1px">
+        <tr>
+            <td>Total Bill:</td>
+            <td>&#8377; {{total_bill}}</td>
+        </tr>
+        <tr>
+            <td>Deposit:</td>
+            <td>&#8377; {{deposit}}</td>
+        </tr>
+        <tr>
+            <td>Discount:</td>
+            <td>{{discount}} %</td>
+        </tr>
+        <tr>
+            <td>Hospital Credit:</td>
+            <td>&#8377; {{hosp_credit}}</td>
+        </tr>
+    </table>
+</body>
+</html>

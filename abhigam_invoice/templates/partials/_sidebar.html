@@ -1,0 +1,115 @@
+<li class="nav-item">
+    {% if 'dashboard' in request.path %}
+    <a href="{% url 'dashboard' %}" class="nav-link active">
+      <i class="fa fa-address-card" style="color:rgb(255, 255, 255)"></i>
+      {% else %}
+      <a href="{% url 'dashboard' %}" class="nav-link">
+        <i class="fa fa-address-card" style="color:rgb(0, 68, 255)"></i>
+        {% endif %}
+      <p>
+        Dashboard
+      </p>
+    </a>
+  </li>
+<li class="nav-item">
+    <a href="{% url 'admit_patient' %}" 
+    {% if 'admit_patient' in request.path %}
+    class="nav-link active"
+    {% else %}
+    class="nav-link"
+    {% endif %}
+    >
+      <i class="fa fa-ambulance" style="color: rgb(255, 255, 255)"></i>
+      <p>
+        Admit Patient
+      </p>
+    </a>
+  </li>
+    <li class="nav-item">
+    <a href="" 
+    {% if 'Inst_list' in request.path %}
+    class="nav-link active"
+    {% else %}
+    class="nav-link"
+    {% endif %}
+    >
+      <i class="fa fa-credit-card" style="color: yellow"></i>
+      <p>
+        Deposit Amount
+      </p>
+    </a>
+  </li>
+    <li class="nav-item">
+    <a href="" 
+    {% if 'Schd_Exm' in request.path %}
+    class="nav-link active"
+    {% else %}
+    class="nav-link"
+    {% endif %}
+    >
+      <i class="fas fa-dollar-sign" style="color: darkviolet"></i>
+      <p>
+        Patient's Daily Expense
+      </p>
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a href="" 
+    {% if 'color_manager' in request.path %}
+    class="nav-link active"
+    {% else %}
+    class="nav-link"
+    {% endif %}
+    >
+      <i class="fa fa-user" style="color: rgb(55, 255, 248)"></i>
+      <p>
+         Individual Patient Profile
+      </p>
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a href="" 
+    {% if 'color_manager' in request.path %}
+    class="nav-link active"
+    {% else %}
+    class="nav-link"
+    {% endif %}
+    >
+      <i class="fa fa-users" style="color: rgb(202, 55, 255)"></i>
+      <p>
+         All Patient Profile
+      </p>
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a href="" 
+    {% if 'color_manager' in request.path %}
+    class="nav-link active"
+    {% else %}
+    class="nav-link"
+    {% endif %}
+    >
+      <i class="fa fa-file-invoice" style="color: orange"></i>
+      <p>
+        Bill
+      </p>
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a href="" 
+    {% if 'color_manager' in request.path %}
+    class="nav-link active"
+    {% else %}
+    class="nav-link"
+    {% endif %}
+    >
+      <i class="fa fa-address-book" style="color: rgb(42, 255, 74)"></i>
+      <p>
+        Reference Report
+      </p>
+    </a>
+  </li>

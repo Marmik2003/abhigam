@@ -1,0 +1,85 @@
+{% extends 'partials/_base.html' %}
+{% block title %}
+Abhigam | Admit Patient
+{% endblock title %}
+{% block container-fluid %}
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header"><i class="fa fa-ambulance"></i>&nbsp; Admit Patient</h1>
+    </div>
+</div>
+<section id="color-registration">
+<div class="card">
+    <div class="shadow">
+        {% include 'partials/_alerts.html' %}
+        <div class="row-md-12 px-4 py-3">
+            <form action="" method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                      <label for="patientId">Patient ID</label>
+                      <input type="text" class="form-control" id="patientId" placeholder="e.g. AC1010" disabled>
+                    </div>
+                    <div class="form-group col-md-5">
+                      <label for="patientName">Patient Name</label>
+                      <input type="text" class="form-control" id="patientName" placeholder="John Doe">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="agebox">Age</label>
+                        <input type="number" class="form-control" id="agebox" placeholder="Age">
+                      </div>
+                    
+                  </div>
+                  <div class="form-row">
+                    
+                    <div class="form-group col-md-3">
+                        <label for="fatherName">Father/Husband Name</label>
+                        <input type="number" class="form-control" id="fatherName" placeholder="e.g. James Doe">
+                      </div>
+                  </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputEmail4">Patient's Email</label>
+                      <input type="email" class="form-control" id="inputEmail4" placeholder="Patient Email">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="emailrelative">Relative's Email</label>
+                      <input type="email" class="form-control" id="emailrelative" placeholder="Relative Email">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputAddress">Address line 1</label>
+                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Society">
+                  </div>
+                  <div class="form-group">
+                    <label for="inputAddress2">Address line 2</label>
+                    <input type="text" class="form-control" id="inputAddress2" placeholder="abc road">
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputCity">City</label>
+                      <input type="text" class="form-control" id="inputCity" placeholder="Himatnagar">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="inputState">State</label>
+                      <input type="text" class="form-control" id="inputState" placeholder="Gujarat">
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="inputPin">Pin</label>
+                      <input type="number" class="form-control" id="inputPin" min="100000" max="999999">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="confirmadmiting">
+                      <label class="form-check-label" for="confirmadmiting">
+                        Confirm Submit
+                      </label>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Admit</button>
+            </form>
+        </div>
+    </div>
+</div>
+</section>
+{% endblock container-fluid %}
