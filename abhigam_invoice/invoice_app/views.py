@@ -24,6 +24,15 @@ def dashboard(request):
 def admit_patient(request):
     return render(request, 'admit_patient.html')
 
+def deposit_amount(request):
+    return render(request, 'deposit_amount.html')
+
+def pt_d_exp(request):
+    return render(request, 'pt_d_exp.html')
+
+def ind_pt_prof(request):
+    return render(request, 'ind_pt_prof.html')
+
 def invoice_maker(request):
     if request.method != 'POST':
         return render(request, 'invoice_maker.html')

@@ -9,7 +9,7 @@ class ADMIT_PATIENT(models.Model):
     PATIENT_AGE = models.IntegerField()
     PATIENT_ADMIT_DATE_TIME = models.DateTimeField()
     PATIENT_BIRTH_DATE = models.DateTimeField()
-    PATIENT_SEX = models.CharField(max_length=5)
+    PATIENT_SEX = models.CharField(max_length=7)
     PATIENT_STREET1 = models.CharField(max_length=45)
     PATIENT_STREET2 = models.CharField(max_length=45)
     PATIENT_DISTRICT = models.CharField(max_length=45)
