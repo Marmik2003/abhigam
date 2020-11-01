@@ -15,35 +15,72 @@ Abhigam | Admit Patient
         <div class="row-md-12 px-4 py-3">
             <form action="" method="post">
                 <div class="form-row">
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-1">
                       <label for="patientId">Patient ID</label>
-                      <input type="text" class="form-control" id="patientId" placeholder="e.g. AC1010" disabled>
+                      <input type="text" class="form-control" id="patientId" placeholder="AC1010" disabled>
                     </div>
-                    <div class="form-group col-md-5">
+                    <div class="form-group col-md-4">
                       <label for="patientName">Patient Name</label>
                       <input type="text" class="form-control" id="patientName" placeholder="John Doe">
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-1">
                         <label for="agebox">Age</label>
                         <input type="number" class="form-control" id="agebox" placeholder="Age">
                       </div>
-                    
+                      <div class="form-group col-md-2">
+                        <label for="agebox">Gender</label>
+                        <select class="form-control" id="gender">
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                          <option value="other">Other</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="fatherName">Father/Husband Name</label>
+                        <input type="text" class="form-control" id="fatherName" placeholder="Father/Husband Name">
+                      </div>
                   </div>
                   <div class="form-row">
                     
-                    <div class="form-group col-md-3">
-                        <label for="fatherName">Father/Husband Name</label>
-                        <input type="number" class="form-control" id="fatherName" placeholder="e.g. James Doe">
+                    <div class="form-group col-md-2">
+                        <label for="admitDate">Admit Date</label>
+                        <input type="date" class="form-control" id="admitDate" placeholder="01/01/1001">
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label for="admitTime">Admit Time</label>
+                        <input type="time" class="form-control" id="admitTime" placeholder="23:59">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="referby">Refer by</label>
+                        <input type="text" class="form-control" id="referby" placeholder="Refer by">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="information_givenby">Information Given by</label>
+                        <input type="text" class="form-control" id="information_givenby" placeholder="Information Given by">
                       </div>
                   </div>
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                       <label for="inputEmail4">Patient's Email</label>
                       <input type="email" class="form-control" id="inputEmail4" placeholder="Patient Email">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                       <label for="emailrelative">Relative's Email</label>
                       <input type="email" class="form-control" id="emailrelative" placeholder="Relative Email">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="relation">Relation with patient</label>
+                      <input type="text" class="form-control" id="relation" placeholder="Relation with patient">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="inputEmail4">Patient's Phone</label>
+                      <input type="tel" pattern="[0-9]{10}" class="form-control" id="inputPhone4" placeholder="Patient Phone">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="Phonerelative">Relative's Phone</label>
+                      <input type="tel" pattern="[0-9]{10}" class="form-control" id="Phonerelative" placeholder="Relative Phone">
                     </div>
                   </div>
                   <div class="form-group">
@@ -66,6 +103,30 @@ Abhigam | Admit Patient
                     <div class="form-group col-md-2">
                       <label for="inputPin">Pin</label>
                       <input type="number" class="form-control" id="inputPin" min="100000" max="999999">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="treating">Treating Doctor(fix)</label>
+                      <select name="treating_doctor" id="treating" class="form-control">
+                        <option value="test_doctor">test_doctor</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="mediclaim">Medi-claim</label>
+                      <select name="mediclaim" id="mediclaim" class="form-control">
+                        <option value="yes">Yes</option>
+                        <option value="no" selected>no</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="Phonerelative">Room Category</label>
+                      <select name="roomCategory" id="roomCategory" class="form-control">
+                        <option value="hdu">High-Dependency unit</option>
+                        <option value="hduplusisolation">High-Dependency unit + Isolation</option>
+                      </select>
                     </div>
                   </div>
                   <div class="form-group">
