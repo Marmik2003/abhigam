@@ -1,0 +1,122 @@
+@media screen and ( min-width : 10px ) {
+    .logo_in {
+        display: block;
+        margin: auto;
+    }
+
+    .site-navbar-wrap {
+        background: #375075;
+    }
+
+    img.logo {
+        background: #fff;
+        margin-top: 10px;
+        box-shadow: 0px 1px 4px 2px rgba(0, 0, 0, 0.51);
+    }
+
+    a.nav-link {
+        border-bottom: 1px solid #364f7438 !Important;
+        color: #334a6d !important;
+        font-weight: 400;
+        padding-left: 0 !important;
+    }
+    #Add_nw_course .col-12{
+        padding:0;
+    }
+    .login_btn {
+        background: #fff;
+    }
+    .school_details{
+        left:10px;
+    }
+    /*::-webkit-scrollbar {
+        width: 0px;
+    }*/
+}
+
+
+
+@media screen and ( min-width : 576px ) {
+    #Add_nw_course .col-12 {
+        padding: 0 15px;
+    }
+    .logo_in {
+        display: none;
+    }
+    .school_details{
+        left:60px
+    }
+    ::-webkit-scrollbar {
+        width: 15px;
+    }
+
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0px 5px grey;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #2b3b53;
+        border-radius: 10px;
+    }
+    .d_block_mble{
+        display:none;
+    }
+}
+@media screen and (min-width : 991px){
+    a.nav-link {
+        border-bottom: 0px solid #364f7438 !Important;
+        color: #fff !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    .login_btn {
+        background: #58749c;
+    }
+}
+
+@media screen and (max-width : 576px){
+    .p_none_mble{
+        padding:0 0 0 3px;
+    }
+    .exam_name_title{
+        text-align:left;
+        border-bottom:1px solid #364f7438;
+        padding-left:30px;
+    }
+    .exam_name_title p{
+        font-weight:700;
+        font-size:large;
+    }
+    .d_block_mble {
+        display: inline-block;
+    }
+    #ContentPlaceHolder1_exam_page {
+        padding-top: 65px;
+    }
+    .d_none_mble{
+        display:none;
+    }
+    .exam_main .container-fluid {
+        padding: 0 0 0 16px;
+    }
+    .d_block_min{
+        display:block;
+    }
+    .sm_btn_exam {
+        padding: 5px 5px !important;
+        border-radius: 14px !important;
+        min-width: 97px !important;
+        max-width: 108px !important;
+    }
+    .mt_exam{
+        margin-top:50px;
+        padding-bottom:20px;
+    }
+    .num_box {
+        margin-left: -10px;
+    }
+    .exam_main{
+        overflow-y:hidden;
+    }
+    
+}
