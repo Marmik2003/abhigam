@@ -14,29 +14,30 @@ Abhigam | Bill
             {% include 'partials/_alerts.html' %}
             <div class="row-md-12 px-4 py-3">
                 <form method="post">
+                    {% csrf_token %}
                     <div class="form-row">
                         <div class="form-group col-md-2">
                             <label for="billno">Bill Number</label>
-                            <input class="form-control" type="number" placeholder="Bill number" id="billno" name="billno">
+                            <input class="form-control" type="text" id="billno" name="billno" value="{{ billno }}" disabled>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="patient_id">Patient ID</label>
-                            <input class="form-control" type="number" placeholder="Bill number" id="patient_id" name="patient_id">
+                            <input class="form-control" type="text" placeholder="Patient ID" id="patient_id" name="patient_id" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="pan_no">PAN Number</label>
-                            <input class="form-control" type="text" name="pan_no" id="pan_no">
+                            <input class="form-control" type="text" name="pan_no" id="pan_no" required>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="cin_no">CIN Number</label>
-                            <input class="form-control" type="text" name="cin_no" id="cin_no">
+                            <input class="form-control" type="text" name="cin_no" id="cin_no" required>
                         </div>
                     </div>
                     
                     <div class="form-row">
-                        <button type="submit" class="btn btn-primary">Generate Bill</button>
+                        <button type="submit" class="btn btn-success">Generate Bill and Discharge Patient</button>
                     </div>
                 </form>
             </div>

@@ -14,6 +14,7 @@
             {% include 'partials/_alerts.html' %}
             <div class="row-md-12 px-4 py-3">
                 <form method="post">
+                    {% csrf_token %}
                     <div class="form-row">
                         <div class="form-group col-md-1">
                             <label for="patient_id">Patient's ID</label>
@@ -23,11 +24,11 @@
                     <div class="form-row">
                         <div class="form-group col-md-2">
                             <label for="expenseDate">Date</label>
-                            <input type="date" class="form-control" id="expenseDate" placeholder="01/01/1001" required>
+                            <input type="date" class="form-control" id="expenseDate" name="expenseDate" placeholder="01/01/1001" required>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="expensetime">Time</label>
-                            <input type="time" class="form-control" id="expensetime" placeholder="01/01/1001" required>
+                            <input type="time" class="form-control" id="expenseTime" name="expenseTime" placeholder="01/01/1001" required>
                         </div>
                     </div>
                     <br><br>
@@ -38,25 +39,29 @@
                     <div class="form-row">
                         <div class="form-group col-md-2">
                             <label for="Radiology">Radiology</label>
-                            <input type="number" class="form-control" id="Radiology" placeholder="Radiology" min="0" required>
+                            <input type="number" class="form-control" id="Radiology" name="Radiology" placeholder="Radiology" min="0" required>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="Pathology">Pathology</label>
-                            <input type="number" class="form-control" id="Pathology" placeholder="Pathology" min="0" required>
+                            <input type="number" class="form-control" id="Pathology" name="Pathology" placeholder="Pathology" min="0" required>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="Pharmacy">Pharmacy</label>
-                            <input type="number" class="form-control" id="Pharmacy" placeholder="Pharmacy" min="0" required>
+                            <input type="number" class="form-control" id="Pharmacy" name="Pharmacy" placeholder="Pharmacy" min="0" required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="Hospital_Expense">Hospital Expenses</label>
+                            <input type="number" class="form-control" id="Hospital_Expenses" name="Hospital_Expenses" placeholder="Hospital Expense" min="0" required>
                         </div>
                         <div class="form-group col-md-2">
                             <label for="Other">Other</label>
-                            <input type="number" class="form-control" id="Other" placeholder="Other" min="0" required>
+                            <input type="number" class="form-control" id="Other" name="Other" placeholder="Other" min="0" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="Remarks">Remarks</label>
-                            <input type="text" class="form-control" id="Remarks" placeholder="Remarks">
+                            <input type="text" class="form-control" id="Remarks" name="remarks" placeholder="Remarks">
                         </div>
                     </div>
                     <div class="form-row">

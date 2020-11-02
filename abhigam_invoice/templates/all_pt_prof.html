@@ -1,6 +1,7 @@
 {% extends 'partials/_base.html' %}
+{% load extra_tags %}
 {% block title %}
-Abhigam | Individual Patient Profile
+Abhigam | All Patients Profile
 {% endblock title %}
 {% block container-fluid %}
 <div class="row">
@@ -27,11 +28,57 @@ Abhigam | Individual Patient Profile
                             <th>Radiology</th>
                             <th>Pathology</th>
                             <th>Pharmacy</th>
+                            <th>Hospital Cost</th>
                             <th>Other</th>
                             <th>Hospital Debit</th>
                         </thead>
                         <tbody>
-                            
+                            {% for patient in patients %}
+                            <tr>
+                                <td>
+                                    {{ patient.PATIENT_ID }}
+                                </td>
+                                <td>
+                                    {{ patient.PATIENT_NAME }}
+                                </td>
+                                <td>
+                                    {{ patient.PATIENT_ADMIT_DATE_TIME|date:"d/m/Y" }}
+                                </td>
+                                <td>
+                                    {{ patient.PATIENT_DISCHARGE_DATE_TIME|date:"d/m/Y"|default_if_none:"In charge" }}
+                                </td>
+                                <td>
+                                    {% patientdays patient %}
+                                </td>
+                                <td>
+                                    {{ patient.PATIENT_ROOM_TYPE }}
+                                </td>
+                                <td>
+                                    {% physician_visit patient %}
+                                </td>
+                                <td>
+                                    {% deposit_total patient %}
+                                </td>
+                                <td>
+                                    {% radio_total patient %}
+                                </td>
+                                <td>
+                                    {% patho_total patient %}
+                                </td>
+                                <td>
+                                    {% pharma_total patient %}
+                                </td>
+                                <td>
+                                    {% hosp_total patient %}
+                                </td>
+                                <td>
+                                    {% other_total patient %}
+                                </td>
+                                <td>
+                                    {% grand_total patient %}
+                                </td>
+                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>

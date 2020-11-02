@@ -1,0 +1,54 @@
+{% load extra_tags %}
+
+Patient ID: {{patient.PATIENT_ID}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Patient Name: {{patient.PATIENT_NAME}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Admit Date: {{patient.PATIENT_ADMIT_DATE_TIME|date:"d-m-Y"}}
+<br>
+<table width="100%" class="table table-bordered table-hover table-responsive" >
+    <thead>
+        <th>No</th>
+        <th width="5%">Discharge Date</th>
+        <th>Date</th>
+        <th>Room</th>
+        <th width="2%" style="text-align: center;">Physician visit</th>
+        <th>Deposit</th>
+        <th>Radiology</th>
+        <th>Pathology</th>
+        <th>Pharmacy</th>
+        <th>Hospital Cost</th>
+        <th>Other</th>
+        <th>Hospital Debit</th>
+    </thead>
+    <tbody>
+        {% for ind_exp in pt_d_exp_all %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ patient.PATIENT_DISCHARGE_DATE_TIME|default_if_none:"" }}</td>
+            <td>{{ ind_exp.EXPENSE_DATETIME|date:"d/m/Y" }}</td>
+            <td>{{ patient.PATIENT_ROOM_TYPE }}</td>
+            <td>{% physician_visit patient %}</td>
+            <td></td>
+            <td>{{ ind_exp.RADIOLOGY_EXPENSE }}</td>
+            <td>{{ ind_exp.PATHOLOGY_EXPENSE }}</td>
+            <td>{{ ind_exp.PHARMACY_EXPENSE }}</td>
+            <td>{{ ind_exp.HOSPITAL_EXPANSES }}</td>
+            <td>{{ ind_exp.OTHER_EXPENSE }}</td>
+            <td>{% hosp_debit ind_exp.id %}</td>
+        </tr>
+        {% endfor %}
+        {% for ind_depo in all_depo %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td></td>
+            <td>{{ ind_depo.DEPOSIT_DATE|date:"d/m/Y" }}</td>
+            <td>{{ patient.PATIENT_ROOM_TYPE }}</td>
+            <td></td>
+            <td>{{ ind_depo.DEPOSIT_AMOUNT }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

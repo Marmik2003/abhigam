@@ -14,107 +14,130 @@ Abhigam | Admit Patient
         {% include 'partials/_alerts.html' %}
         <div class="row-md-12 px-4 py-3">
             <form action="" method="post">
+              {% csrf_token %}
                 <div class="form-row">
                     <div class="form-group col-md-1">
                       <label for="patientId">Patient ID</label>
-                      <input type="text" class="form-control" id="patientId" placeholder="AC1010" disabled>
+                      <input type="text" class="form-control" id="patientId" value="{{ patient_id }}" disabled>
                     </div>
                     <div class="form-group col-md-4">
                       <label for="patientName">Patient Name</label>
-                      <input type="text" class="form-control" id="patientName" placeholder="John Doe">
+                      <input type="text" class="form-control" id="patientName" name="patientName" placeholder="John Doe">
                     </div>
                     <div class="form-group col-md-1">
                         <label for="agebox">Age</label>
-                        <input type="number" class="form-control" id="agebox" placeholder="Age">
+                        <input type="number" class="form-control" id="agebox" name="agebox" placeholder="Age">
                       </div>
                       <div class="form-group col-md-2">
                         <label for="agebox">Gender</label>
-                        <select class="form-control" id="gender">
+                        <select class="form-control" id="gender" name="gender">
                           <option value="male">Male</option>
                           <option value="female">Female</option>
                           <option value="other">Other</option>
                         </select>
                       </div>
                       <div class="form-group col-md-4">
-                        <label for="fatherName">Father/Husband Name</label>
-                        <input type="text" class="form-control" id="fatherName" placeholder="Father/Husband Name">
+                        <label for="birthDate">Birth Date</label>
+                        <input type="date" class="form-control" id="birthDate" name="birthDate" placeholder="Birth Date" required>
                       </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="fatherName">Father/Husband Name</label>
+                      <input type="text" class="form-control" id="fatherName" name="fatherName" placeholder="Father/Husband Name">
+                    </div>
                   </div>
                   <div class="form-row">
                     
                     <div class="form-group col-md-2">
                         <label for="admitDate">Admit Date</label>
-                        <input type="date" class="form-control" id="admitDate" placeholder="01/01/1001">
+                        <input type="date" class="form-control" id="admitDate" name="admitDate" placeholder="01/01/1001">
                       </div>
                       <div class="form-group col-md-2">
                         <label for="admitTime">Admit Time</label>
-                        <input type="time" class="form-control" id="admitTime" placeholder="23:59">
+                        <input type="time" class="form-control" id="admitTime" name="admitTime" placeholder="23:59">
                       </div>
                       <div class="form-group col-md-4">
                         <label for="referby">Refer by</label>
-                        <input type="text" class="form-control" id="referby" placeholder="Refer by">
+                        <input type="text" class="form-control" id="referby" name="referby" placeholder="Refer by">
                       </div>
                       <div class="form-group col-md-4">
                         <label for="information_givenby">Information Given by</label>
-                        <input type="text" class="form-control" id="information_givenby" placeholder="Information Given by">
+                        <input type="text" class="form-control" id="information_givenby" name="information_givenby" placeholder="Information Given by">
                       </div>
                   </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                      <label for="inputEmail4">Patient's Email</label>
-                      <input type="email" class="form-control" id="inputEmail4" placeholder="Patient Email">
+                      <label for="patient_email">Patient's Email</label>
+                      <input type="email" class="form-control" id="patient_email" name="patient_email" placeholder="Patient Email">
                     </div>
                     <div class="form-group col-md-4">
                       <label for="emailrelative">Relative's Email</label>
-                      <input type="email" class="form-control" id="emailrelative" placeholder="Relative Email">
+                      <input type="email" class="form-control" id="emailrelative" name="emailrelative" placeholder="Relative Email">
                     </div>
                     <div class="form-group col-md-4">
                       <label for="relation">Relation with patient</label>
-                      <input type="text" class="form-control" id="relation" placeholder="Relation with patient">
+                      <input type="text" class="form-control" id="relation" name="relation" placeholder="Relation with patient">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-3">
+                      <label for="idproofname">ID Proof type</label>
+                      <input type="text" name="idproofname" id="idproofname" class="form-control" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="idproofnumber">ID Proof number</label>
+                      <input type="text" name="idproofnumber" id="idproofnumber" class="form-control" required>
                     </div>
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-4">
-                      <label for="inputEmail4">Patient's Phone</label>
-                      <input type="tel" pattern="[0-9]{10}" class="form-control" id="inputPhone4" placeholder="Patient Phone">
+                      <label for="patientPhone">Patient's Phone</label>
+                      <input type="tel" pattern="[0-9]{10}" class="form-control" id="patientPhone" name="patientPhone" placeholder="Patient Phone">
                     </div>
                     <div class="form-group col-md-4">
                       <label for="Phonerelative">Relative's Phone</label>
-                      <input type="tel" pattern="[0-9]{10}" class="form-control" id="Phonerelative" placeholder="Relative Phone">
+                      <input type="tel" pattern="[0-9]{10}" class="form-control" id="Phonerelative" name="Phonerelative" placeholder="Relative Phone">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputAddress">Address line 1</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Society">
+                    <label for="inputAddress1">Address line 1</label>
+                    <input type="text" class="form-control" id="inputAddress1" name="inputAddress1" placeholder="1234 Society">
                   </div>
                   <div class="form-group">
                     <label for="inputAddress2">Address line 2</label>
-                    <input type="text" class="form-control" id="inputAddress2" placeholder="abc road">
+                    <input type="text" class="form-control" id="inputAddress2" name="inputAddress2" placeholder="abc road">
                   </div>
                   <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                       <label for="inputCity">City</label>
-                      <input type="text" class="form-control" id="inputCity" placeholder="Himatnagar">
+                      <input type="text" class="form-control" id="inputCity" name="inputCity" placeholder="Himatnagar">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label for="inputDistrict">District</label>
+                      <input type="text" class="form-control" id="inputDistrict" name="inputDistrict" placeholder="Sabarkantha">
                     </div>
                     <div class="form-group col-md-4">
                       <label for="inputState">State</label>
-                      <input type="text" class="form-control" id="inputState" placeholder="Gujarat">
+                      <input type="text" class="form-control" id="inputState" name="inputState" placeholder="Gujarat">
                     </div>
                     <div class="form-group col-md-2">
                       <label for="inputPin">Pin</label>
-                      <input type="number" class="form-control" id="inputPin" min="100000" max="999999">
+                      <input type="number" class="form-control" id="inputPin" name="inputPin" min="100000" max="999999" placeholder="383001">
                     </div>
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="treating">Treating Doctor(fix)</label>
                       <select name="treating_doctor" id="treating" class="form-control">
-                        <option value="test_doctor">test_doctor</option>
+                        {% for doctor_name in doctor_list %}
+                        <option value="{{doctor_name.id}}">{{doctor_name}}</option>
+                        {% endfor %}
                       </select>
                     </div>
                     <div class="form-group col-md-2">
                       <label for="physician_charge">Physician Charge</label>
-                      <input type="number" id="physician_charge" placeholder="physician charge" class="form-control">
+                      <input type="number" id="physician_charge" name="physician_charge" placeholder="physician charge" class="form-control">
                     </div>
                   </div>
                   <div class="form-row">
@@ -128,20 +151,21 @@ Abhigam | Admit Patient
                     <div class="form-group col-md-4">
                       <label for="Phonerelative">Room Category</label>
                       <select name="roomCategory" id="roomCategory" class="form-control">
-                        <option value="hdu">High-Dependency unit</option>
-                        <option value="hduplusisolation">High-Dependency unit + Isolation</option>
+                        {% for room in room_types %}
+                        <option value="{{room.id}}">{{room.ROOM_TYPE}}</option>
+                        {% endfor %}
                       </select>
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="confirmadmiting">
-                      <label class="form-check-label" for="confirmadmiting">
+                      <input class="form-check-input" type="checkbox" id="confirmadmitting" onchange="document.getElementById('submitbtn').disabled = !this.checked;">
+                      <label class="form-check-label" for="confirmadmitting">
                         Confirm Admit
                       </label>
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-primary">Admit</button>
+                  <button type="submit" class="btn btn-primary" id="submitbtn" disabled> Admit</button>
             </form>
         </div>
     </div>

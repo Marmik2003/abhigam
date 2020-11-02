@@ -1,0 +1,20 @@
+{% load extra_tags %}
+<br>
+<table width="100%" class="table table-bordered table-hover table-responsive" >
+    <thead>
+        <th width="7%">No</th>
+        <th width="60%">Patient Name</th>
+        <th width="30%">Refer by</th>
+        <th width="7%">Days</th>
+    </thead>
+    <tbody>
+        {% for patient in patients %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{ patient.PATIENT_NAME }}</td>
+            <td>{{ patient.PATIENT_REFER_BY }}</td>
+            <td>{% patientdays patient %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

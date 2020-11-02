@@ -14,22 +14,23 @@ Abhigam | Deposit Amount
             {% include 'partials/_alerts.html' %}
             <div class="row-md-12 px-4 py-3">
                 <form method="post">
+                    {% csrf_token %}
                     <div class="form-row">
                         <div class="form-group col-md-1">
                             <label for="patient_id">Patient's ID</label>
-                            <input type="text" id="patient_id" name="patient_id" class="form-control" value="AC">
+                            <input type="text" id="patient_id" name="patient_id" class="form-control" value="AC" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-3">
                             <label for="patient_id">Deposit Amount</label>
-                            <input type="number" id="deposit_amount" name="deposit_amount" class="form-control">
+                            <input type="number" id="deposit_amount" name="deposit_amount" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-3">
                             <label for="depositDate">Date of Deposition</label>
-                            <input type="date" class="form-control" id="depositDate" placeholder="01/01/1001">
+                            <input type="date" class="form-control" id="depositDate" name="deposit_date" placeholder="01/01/1001" required>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Deposit</button>
