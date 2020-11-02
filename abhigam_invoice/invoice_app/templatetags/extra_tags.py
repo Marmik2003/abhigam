@@ -9,12 +9,13 @@ register = template.Library()
 def patientdays(patient):
     patient_admit_datetime = patient.PATIENT_ADMIT_DATE_TIME
     if patient.PATIENT_DISCHARGE_DATE_TIME != None:
-        last_datetime = patient.PATIENT_DISCHARGE_DATE_TIME
-        last_date = dateutil.parser.parse(last_datetime.strftime('%d/%m/%Y')).date()
+        # last_datetime = patient.PATIENT_DISCHARGE_DATE_TIME
+        # last_date = dateutil.parser.parse(last_datetime.strftime('%d/%m/%Y')).date()
+        last_date = patient.PATIENT_DISCHARGE_DATE_TIME.date()
     else:
         last_date = datetime.now().date()
     patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%d/%m/%Y')).date()
-    days1 = (last_date).days
+    days1 = (last_date - patient_admit_date).days
     print(patient_admit_date)
     return str(days1)
 
@@ -27,8 +28,9 @@ def hosp_debit(id):
 def physician_visit(patient):
     patient_admit_datetime = patient.PATIENT_ADMIT_DATE_TIME
     if patient.PATIENT_DISCHARGE_DATE_TIME != None:
-        last_datetime = patient.PATIENT_DISCHARGE_DATE_TIME
-        last_date = dateutil.parser.parse(last_datetime.strftime('%d/%m/%Y')).date()
+        # last_datetime = patient.PATIENT_DISCHARGE_DATE_TIME
+        # last_date = dateutil.parser.parse(last_datetime.strftime('%d/%m/%Y')).date()
+        last_date = patient.PATIENT_DISCHARGE_DATE_TIME.date()
     else:
         last_date = datetime.now().date()
     patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%d/%m/%Y')).date()
@@ -95,8 +97,9 @@ def grand_total(patient):
     
     patient_admit_datetime = patient.PATIENT_ADMIT_DATE_TIME
     if patient.PATIENT_DISCHARGE_DATE_TIME != None:
-        last_datetime = patient.PATIENT_DISCHARGE_DATE_TIME
-        last_date = dateutil.parser.parse(last_datetime.strftime('%d/%m/%Y')).date()
+        # last_datetime = patient.PATIENT_DISCHARGE_DATE_TIME
+        # last_date = dateutil.parser.parse(last_datetime.strftime('%d/%m/%Y')).date()
+        last_date = patient.PATIENT_DISCHARGE_DATE_TIME.date()
     else:
         last_date = datetime.now().date()
     patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%d/%m/%Y')).date()
@@ -116,8 +119,9 @@ def total_room_cost(patient):
     room_cost = room.ROOM_PRICE
     patient_admit_datetime = patient.PATIENT_ADMIT_DATE_TIME
     if patient.PATIENT_DISCHARGE_DATE_TIME != None:
-        last_datetime = patient.PATIENT_DISCHARGE_DATE_TIME
-        last_date = dateutil.parser.parse(last_datetime.strftime('%d/%m/%Y')).date()
+        # last_datetime = patient.PATIENT_DISCHARGE_DATE_TIME
+        # last_date = dateutil.parser.parse(last_datetime.strftime('%d/%m/%Y')).date()
+        last_date = patient.PATIENT_DISCHARGE_DATE_TIME.date()
     else:
         last_date = datetime.now().date()
     patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%d/%m/%Y')).date()
@@ -134,8 +138,9 @@ def phy_cost_total(patient):
     phy_cost = patient.PATIENT_PHYSICIAN_CHARGE
     patient_admit_datetime = patient.PATIENT_ADMIT_DATE_TIME
     if patient.PATIENT_DISCHARGE_DATE_TIME != None:
-        last_datetime = patient.PATIENT_DISCHARGE_DATE_TIME
-        last_date = dateutil.parser.parse(last_datetime.strftime('%d/%m/%Y')).date()
+        # last_datetime = patient.PATIENT_DISCHARGE_DATE_TIME
+        # last_date = dateutil.parser.parse(last_datetime.strftime('%d/%m/%Y')).date()
+        last_date = patient.PATIENT_DISCHARGE_DATE_TIME.date()
     else:
         last_date = datetime.now().date()
     patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%d/%m/%Y')).date()
