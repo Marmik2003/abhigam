@@ -1,6 +1,6 @@
 {% load extra_tags %}
 <br>
-<table width="100%" class="table table-bordered table-hover table-responsive" >
+<table width="100%" class="table table-bordered table-hover table-responsive" id="pt_table">
     <thead>
         <th width="7%">No</th>
         <th width="60%">Patient Name</th>
@@ -13,8 +13,68 @@
             <td>{{forloop.counter}}</td>
             <td>{{ patient.PATIENT_NAME }}</td>
             <td>{{ patient.PATIENT_REFER_BY }}</td>
-            <td>{% patientdays patient %}</td>
+            <td id="row_{{ forloop.counter }}">{% patientdays patient %}</td>
         </tr>
         {% endfor %}
+        <tr>
+            <td colspan="3"><b>Total</b></td>
+            <td id="total"></td>
+        </tr>
     </tbody>
 </table>
+<br>
+<div class="row-md-12 px-2 py-3">
+    <button class="btn btn-success bg-transparent" style="color: green;" id="gen_xl"> <i class="far fa-file-excel"></i> Generate Excel</button>
+</div>
+<script>
+    var total_days = 0;
+    for(row=1;row<=parseInt({{patients.count}});row++){
+        var row_val = parseInt(document.getElementById("row_"+row.toString()).innerHTML)
+        total_days += row_val
+    }
+    document.getElementById("total").innerHTML = total_days;
+</script>
+<script>
+    function tableToExcel(tableID, filename = ''){
+        var downloadLink;
+        var dataType = 'application/vnd.ms-excel';
+        var tableSelect = document.getElementById(tableID);
+        var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+        
+        // Specify file name
+        filename = filename?filename+'.xls':'excel_data.xls';
+        
+        // Create download link element
+        downloadLink = document.createElement("a");
+        
+        document.body.appendChild(downloadLink);
+        
+        if(navigator.msSaveOrOpenBlob){
+            var blob = new Blob(['\ufeff', tableHTML], {
+                type: dataType
+            });
+            navigator.msSaveOrOpenBlob( blob, filename);
+        }else{
+            // Create a link to the file
+            downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+        
+            // Setting the file name
+            downloadLink.download = filename;
+            
+            //triggering the function
+            downloadLink.click();
+        }
+    }
+</script>
+<script>
+    $("#gen_xl").click(function(){
+        tableToExcel('pt_table', 'Referance Report')
+    });
+    $(document).ready(function() {
+        $('#pt_table').DataTable(
+          {
+            "order":[[0,"asc"]]
+          }
+        );
+    } );
+    </script>

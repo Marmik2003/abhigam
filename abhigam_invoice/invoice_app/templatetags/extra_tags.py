@@ -105,7 +105,13 @@ def grand_total(patient):
     patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
     days1 = (last_date - patient_admit_date).days
     grand_total += room_cost*days1
-    return str(grand_total)
+    deposits = PATIENT_DEPOSIT.objects.filter(PATIENT_ID=patient)
+    depo_total = 0
+    for depo in deposits:
+        depo_total += depo.DEPOSIT_AMOUNT
+
+    hosp_debit_total = depo_total - grand_total
+    return str(hosp_debit_total)
 
 @register.simple_tag
 def room_type(patient):

@@ -76,7 +76,7 @@ Abhigam | All Patients Profile
                                 <td>
                                     {% other_total patient %}
                                 </td>
-                                <td>
+                                <td id="debit_{{ forloop.counter }}">
                                     {% grand_total patient %}
                                 </td>
                             </tr>
@@ -87,29 +87,59 @@ Abhigam | All Patients Profile
                 <div id="editor"></div>
                 
                 <div class="row-md-12 px-2 py-3">
-                    <button class="btn btn-success bg-transparent" style="color: green;" id="gen_xl"> <i class="far fa-file-excel"></i> Generate Excel</button> &nbsp;&nbsp;&nbsp;&nbsp; <button class="btn btn-danger bg-transparent" style="color: red;" id="gen_pdf"> <i class="far fa-file-pdf"></i> Generate PDF</button>
+                    <button class="btn btn-success bg-transparent" style="color: green;" id="gen_xl"> <i class="far fa-file-excel"></i> Generate Excel</button>
                 </div>
             </div>
             
         </div>
     </div>
 </section>
+<script>
+    $(document).ready(function(){
+        for(i=1;i<={{patients.count}};i++){
+            var debit_val = parseInt(document.getElementsById("debit_"+i).innerHTML);
+            if(debit_val<0){
+                document.getElementById("debit_"+i).style.color = "red";
+                document.getElementById("debit_"+i).style.fontWeight = "800";
+            }
+        }
+    });
+</script>
 <script type="text/javascript">
-    var tableToExcel = (function() {
-      var uri = 'data:application/vnd.ms-excel;base64,'
-        , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
-        , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
-        , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
-      return function(table, name) {
-        if (!table.nodeType) table = document.getElementById(table)
-        var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
-        window.location.href = uri + base64(format(template, ctx))
-      }
-    })()
+    function tableToExcel(tableID, filename = ''){
+        var downloadLink;
+        var dataType = 'application/vnd.ms-excel';
+        var tableSelect = document.getElementById(tableID);
+        var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+        
+        // Specify file name
+        filename = filename?filename+'.xls':'excel_data.xls';
+        
+        // Create download link element
+        downloadLink = document.createElement("a");
+        
+        document.body.appendChild(downloadLink);
+        
+        if(navigator.msSaveOrOpenBlob){
+            var blob = new Blob(['\ufeff', tableHTML], {
+                type: dataType
+            });
+            navigator.msSaveOrOpenBlob( blob, filename);
+        }else{
+            // Create a link to the file
+            downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+        
+            // Setting the file name
+            downloadLink.download = filename;
+            
+            //triggering the function
+            downloadLink.click();
+        }
+    }
     </script>
 <script>
 $("#gen_xl").click(function(){
-    tableToExcel('pt_table', 'Patient DataTable')
+    tableToExcel('pt_table', 'All Patient Details')
 });
 $(document).ready(function() {
     $('#pt_table').DataTable(

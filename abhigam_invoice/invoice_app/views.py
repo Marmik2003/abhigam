@@ -281,12 +281,18 @@ def bill_generator(request):
         return HttpResponse(pdf, content_type='application/pdf')
 
 def reference_report(request):
-    doctors = PATIENT_TREATING_DR.objects.all()
+    patients = ADMIT_PATIENT.objects.all()
+    doctors = []
+    for patient in patients:
+        if patient.PATIENT_REFER_BY in doctors:
+            pass
+        else:
+            doctors.append(patient.PATIENT_REFER_BY)
     return render(request,'reference_report.html', context={'doctors':doctors})
 
 def reference_table(request):
-    dr_id = request.GET.get('DrId')
-    patients = ADMIT_PATIENT.objects.filter(PATIENT_TREATING_DR_id=dr_id)
+    dr = request.GET.get('Dr')
+    patients = ADMIT_PATIENT.objects.filter(PATIENT_REFER_BY=dr)
     return render(request, 'reference_table.html', context={'patients':patients})
 
 def invoice_maker(request):

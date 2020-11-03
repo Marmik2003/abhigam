@@ -16,7 +16,7 @@
                 <form method="post" id="pt_form" data-patient-url="{% url 'patientsearch' %}">
                     {% csrf_token %}
                     <div class="form-row">
-                        <div class="form-group col-md-1">
+                        <div class="form-group col-md-6">
                             <label for="patient_id">Patient's ID</label>
                             <select name="patient_id" id="patient_id" required>
                                 <option value="" selected disabled>Select Patient Id</option>
@@ -30,11 +30,11 @@
 
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label for="expenseDate">Date</label>
                             <input type="date" class="form-control" id="expenseDate" name="expenseDate" placeholder="01/01/1001" required>
                         </div>
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <label for="expensetime">Time</label>
                             <input type="time" class="form-control" id="expenseTime" name="expenseTime" placeholder="01/01/1001" required>
                         </div>

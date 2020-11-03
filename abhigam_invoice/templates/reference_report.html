@@ -20,7 +20,7 @@ Abhigam | Reference Report
                             <select name="doctor_name" id="doctor_name" class="form-control">
                                 <option value="" selected disabled>Select Doctor Name</option>
                                 {% for doctor in doctors %}
-                                    <option value="{{doctor.id}}">{{ doctor.TREATING_DR_NAME }}</option>
+                                    <option value="{{doctor}}">{{ doctor }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -42,7 +42,7 @@ Abhigam | Reference Report
       $.ajax({
         url: url,
         data: {
-          'DrId': DrId
+          'Dr': DrId
         },
         success: function (data) {
           $("#patientData").html(data);
