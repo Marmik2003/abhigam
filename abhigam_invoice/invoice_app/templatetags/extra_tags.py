@@ -20,9 +20,27 @@ def patientdays(patient):
     return str(days1)
 
 @register.simple_tag
-def hosp_debit(id):
-    expense = PATIENT_DAILY_EXPENSE.objects.get(id=id)
-    return str(expense.RADIOLOGY_EXPENSE+expense.PATHOLOGY_EXPENSE+expense.PHARMACY_EXPENSE+expense.HOSPITAL_EXPANSES+expense.OTHER_EXPENSE)
+def depositamount(patient, ind_exp):
+    try:
+        deposit_date = dateutil.parser.parse(ind_exp.strftime('%m/%d/%Y')).date()
+        deposit_amount = PATIENT_DEPOSIT.objects.get(PATIENT_ID=patient, DEPOSIT_DATE=deposit_date).DEPOSIT_AMOUNT
+    except:
+        deposit_amount = 0
+    return str(deposit_amount)
+
+@register.simple_tag
+def hosp_debit(ind_exp, patient):
+    expense = PATIENT_DAILY_EXPENSE.objects.get(id=ind_exp.id)
+    room = patient.PATIENT_ROOM_TYPE
+    room_cost = room.ROOM_PRICE
+    # try:
+    #     deposit_date = dateutil.parser.parse(ind_exp.strftime('%m/%d/%Y')).date()
+    #     deposit_amount = PATIENT_DEPOSIT.objects.get(PATIENT_ID=patient, DEPOSIT_DATE=deposit_date).DEPOSIT_AMOUNT
+    # except:
+    #     deposit_amount = 0
+    deposit_date = dateutil.parser.parse(ind_exp.EXPENSE_DATETIME.strftime('%m/%d/%Y')).date()
+    deposit_amount = PATIENT_DEPOSIT.objects.get(PATIENT_ID=patient, DEPOSIT_DATE=deposit_date).DEPOSIT_AMOUNT
+    return str(deposit_amount - (expense.RADIOLOGY_EXPENSE+expense.PATHOLOGY_EXPENSE+expense.PHARMACY_EXPENSE+expense.HOSPITAL_EXPANSES+expense.OTHER_EXPENSE) - room_cost)
 
 @register.simple_tag
 def physician_visit(patient):

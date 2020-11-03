@@ -25,29 +25,13 @@ Patient ID: {{patient.PATIENT_ID}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb
             <td>{{ ind_exp.EXPENSE_DATETIME|date:"d/m/Y" }}</td>
             <td>{{ patient.PATIENT_ROOM_TYPE }}</td>
             <td>{% physician_visit patient %}</td>
-            <td></td>
+            <td>{% depositamount patient ind_exp.EXPENSE_DATETIME %}</td>
             <td>{{ ind_exp.RADIOLOGY_EXPENSE }}</td>
             <td>{{ ind_exp.PATHOLOGY_EXPENSE }}</td>
             <td>{{ ind_exp.PHARMACY_EXPENSE }}</td>
             <td>{{ ind_exp.HOSPITAL_EXPANSES }}</td>
             <td>{{ ind_exp.OTHER_EXPENSE }}</td>
-            <td>{% hosp_debit ind_exp.id %}</td>
-        </tr>
-        {% endfor %}
-        {% for ind_depo in all_depo %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td></td>
-            <td>{{ ind_depo.DEPOSIT_DATE|date:"d/m/Y" }}</td>
-            <td>{{ patient.PATIENT_ROOM_TYPE }}</td>
-            <td></td>
-            <td>{{ ind_depo.DEPOSIT_AMOUNT }}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{% hosp_debit ind_exp patient %}</td>
         </tr>
         {% endfor %}
     </tbody>
