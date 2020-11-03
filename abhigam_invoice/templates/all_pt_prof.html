@@ -1,4 +1,5 @@
 {% extends 'partials/_base.html' %}
+{% load static %}
 {% load extra_tags %}
 {% block title %}
 Abhigam | All Patients Profile
@@ -9,13 +10,14 @@ Abhigam | All Patients Profile
         <h1 class="page-header"><i class="fa fa-users"></i>&nbsp; All Patients' Profile</h1>
     </div>
 </div>
+
 <section id="color-registration">
     <div class="card">
         <div class="shadow">
             {% include 'partials/_alerts.html' %}
             <div class="row-md-12 px-4 py-3">
-                <div class="row-md-12 px-2 py-3">
-                    <table width="100%" class="table table-bordered table-hover table-responsive" >
+                <div class="row-md-12 px-2 py-3" id="content">
+                    <table width="100%" class="table table-bordered table-hover table-responsive dataTable" id="pt_table">
                         <thead>
                             <th>Patient ID</th>
                             <th>Patient Name</th>
@@ -82,8 +84,40 @@ Abhigam | All Patients Profile
                         </tbody>
                     </table>
                 </div>
+                <div id="editor"></div>
+                
+                <div class="row-md-12 px-2 py-3">
+                    <button class="btn btn-success bg-transparent" style="color: green;" id="gen_xl"> <i class="far fa-file-excel"></i> Generate Excel</button> &nbsp;&nbsp;&nbsp;&nbsp; <button class="btn btn-danger bg-transparent" style="color: red;" id="gen_pdf"> <i class="far fa-file-pdf"></i> Generate PDF</button>
+                </div>
             </div>
+            
         </div>
     </div>
 </section>
+<script type="text/javascript">
+    var tableToExcel = (function() {
+      var uri = 'data:application/vnd.ms-excel;base64,'
+        , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+        , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+        , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+      return function(table, name) {
+        if (!table.nodeType) table = document.getElementById(table)
+        var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+        window.location.href = uri + base64(format(template, ctx))
+      }
+    })()
+    </script>
+<script>
+$("#gen_xl").click(function(){
+    tableToExcel('pt_table', 'Patient DataTable')
+});
+$(document).ready(function() {
+    $('#pt_table').DataTable(
+      {
+        "order":[[0,"asc"]]
+      }
+    );
+} );
+</script>
+
 {% endblock container-fluid %}

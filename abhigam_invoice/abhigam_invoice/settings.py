@@ -78,8 +78,11 @@ WSGI_APPLICATION = 'abhigam_invoice.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR/'abhigam.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'abhigam',
+        'USER': 'dbadmin',
+        'PASSWORD': 'abc123!',
+        'HOST': 'localhost',
     }
 }
 

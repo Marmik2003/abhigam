@@ -10,8 +10,9 @@
     <style>
         .new-jumbo{
             background-color: #d3d3d3;
-            border-radius: 50pxpx;
+            border-radius: 50px;
         }
+        
     </style>
 </head>
 <body>
@@ -30,50 +31,50 @@
                 <table>
                     <tr>
                         <td>
-                            <h5><b>Bill Number:</b></h5> {{bill_id}}
+                            <h5><b>Bill Number:</b>{{bill_id}}</h5> 
                         </td>
                         <td>
-                            <h5><b>Patient ID :</b></h5> {{patient.PATIENT_ID}} <br>
+                            <h5><b>Patient ID :</b>{{patient.PATIENT_ID}} </h5> 
                         </td>
                         <td>
-                            <h5><b>Patient Name:</b></h5>
-                            {{patient.PATIENT_NAME}}
+                            <h5><b>Patient Name:</b>{{patient.PATIENT_NAME}}</h5>
+                            
                         </td>
                         <td>
-                            <h5><b>Father/Husband Name :</b></h5> {{patient.PATIENT_FHR_HUS_NAME}}
+                            <h5><b>Father/Husband Name :</b>{{patient.PATIENT_FHR_HUS_NAME}}</h5> 
                         </td>
                         
                     </tr>
                     <tr>
                         <td>
-                            <h5><b>Patient Birthday :</b></h5> {{patient.PATIENT_BIRTH_DATE|date:"d/m/Y"}}
+                            <h5><b>Patient Birthday: </b>{{patient.PATIENT_BIRTH_DATE|date:"d/m/Y"}}</h5> 
                         </td>
                         <td>
-                            <h5><b>Admit Date :</b></h5> {{patient.PATIENT_ADMIT_DATE_TIME|date:"H:i d/m/Y"}}
+                            <h5><b>Admit Date: </b>{{patient.PATIENT_ADMIT_DATE_TIME|date:"H:i d/m/Y"}}</h5> 
                         </td>
                         <td>
-                            <h5><b>Discharge Date :</b></h5> {{patient.PATIENT_DISCHARGE_DATE_TIME|date:"H:i d/m/Y"}} <br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h5><b>Patient Phone number :</b></h5> {{patient.PATIENT_MOB_NUM}}
-                        </td>
-                        <td>
-                            <h5><b>Patient Email :</b></h5> {{patient.PATIENT_EMAIL_ID}}
+                            <h5><b>Discharge Date: </b>{{patient.PATIENT_DISCHARGE_DATE_TIME|date:"H:i d/m/Y"}}</h5> 
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h5><b>Patient Address :</b></h5> {{patient.PATIENT_STREET1}} <br> {{patient.PATIENT_STREET2}} <br> {{patient.PATIENT_CITY}}, {{patient.PATIENT_DISTRICT}}, {{patient.PATIENT_STATE}} - {{patient.PATIENT_PINCODE}}
+                            <h5><b>Patient Phone number: </b>{{patient.PATIENT_MOB_NUM}}</h5> 
+                        </td>
+                        <td>
+                            <h5><b>Patient Email: </b>{{patient.PATIENT_EMAIL_ID}}</h5> 
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <h5><b>PAN Number :</b></h5> {{pan_no}} <br>
+                            <h5><b>Patient Address: </b></h5> {{patient.PATIENT_STREET1}} <br> {{patient.PATIENT_STREET2}} <br> {{patient.PATIENT_CITY}}, {{patient.PATIENT_DISTRICT}}, {{patient.PATIENT_STATE}} - {{patient.PATIENT_PINCODE}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h5><b>PAN Number :</b> {{pan_no}}</h5> 
                         </td>
                         <td>
-                            <h5><b>CIN Number :</b></h5> {{cin_no}} <br>
+                            <h5><b>CIN Number :</b> {{cin_no}}</h5>
                         </td>
                     </tr>
                 </table>

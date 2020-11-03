@@ -14,7 +14,7 @@ def patientdays(patient):
         last_date = patient.PATIENT_DISCHARGE_DATE_TIME.date()
     else:
         last_date = datetime.now().date()
-    patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%d/%m/%Y')).date()
+    patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
     days1 = (last_date - patient_admit_date).days
     print(patient_admit_date)
     return str(days1)
@@ -33,7 +33,7 @@ def physician_visit(patient):
         last_date = patient.PATIENT_DISCHARGE_DATE_TIME.date()
     else:
         last_date = datetime.now().date()
-    patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%d/%m/%Y')).date()
+    patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
     days1 = (last_date - patient_admit_date).days
     print(patient_admit_date)
     return str(days1+1)
@@ -102,7 +102,7 @@ def grand_total(patient):
         last_date = patient.PATIENT_DISCHARGE_DATE_TIME.date()
     else:
         last_date = datetime.now().date()
-    patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%d/%m/%Y')).date()
+    patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
     days1 = (last_date - patient_admit_date).days
     grand_total += room_cost*days1
     return str(grand_total)
@@ -124,8 +124,8 @@ def total_room_cost(patient):
         last_date = patient.PATIENT_DISCHARGE_DATE_TIME.date()
     else:
         last_date = datetime.now().date()
-    patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%d/%m/%Y')).date()
-    days1 = (last_date - patient_admit_date).days
+    patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
+    days1 = (last_date - patient_admit_date).days 
     return str(room_cost*days1)
 
 @register.simple_tag
@@ -143,6 +143,6 @@ def phy_cost_total(patient):
         last_date = patient.PATIENT_DISCHARGE_DATE_TIME.date()
     else:
         last_date = datetime.now().date()
-    patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%d/%m/%Y')).date()
+    patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
     days1 = (last_date - patient_admit_date).days
     return str(phy_cost*days1)

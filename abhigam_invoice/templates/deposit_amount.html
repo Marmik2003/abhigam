@@ -13,14 +13,21 @@ Abhigam | Deposit Amount
         <div class="shadow">
             {% include 'partials/_alerts.html' %}
             <div class="row-md-12 px-4 py-3">
-                <form method="post">
+                <form method="post" id="pt_form" data-patient-url="{% url 'patientsearch' %}">
                     {% csrf_token %}
                     <div class="form-row">
                         <div class="form-group col-md-1">
                             <label for="patient_id">Patient's ID</label>
-                            <input type="text" id="patient_id" name="patient_id" class="form-control" value="AC" required>
+                            <select name="patient_id" id="patient_id" required>
+                                <option value="" selected disabled>Select Patient Id</option>
+                                {% for patient in patients %}
+                                <option value="{{ patient.PATIENT_ID }}">{{ patient.PATIENT_ID }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
+                        
                     </div>
+                    <div class="form-row" id="patient_name"></div>
                     <div class="form-row">
                         <div class="form-group col-md-3">
                             <label for="patient_id">Deposit Amount</label>
@@ -39,4 +46,23 @@ Abhigam | Deposit Amount
         </div>
     </div>
 </section>
+<script>
+    $("#patient_id").select2();
+    $("#patient_id").change(function () {
+      var url = $("#pt_form").attr("data-patient-url");
+      var patientId = $(this).find("option:selected").val();
+      console.log("clicked");
+      $.ajax({
+        url: url,
+        data: {
+          'patient_id': patientId
+        },
+        success: function (data) {
+          $("#patient_name").html(data);
+          console.log(data);
+        }
+      });
+  
+    });
+</script>
 {% endblock container-fluid %}

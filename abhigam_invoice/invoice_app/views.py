@@ -144,7 +144,8 @@ def admit_patient(request):
 
 def deposit_amount(request):
     if request.method != 'POST':
-        return render(request, 'deposit_amount.html')
+        patients = ADMIT_PATIENT.objects.all()
+        return render(request, 'deposit_amount.html', context={'patients':patients})
     else:
         patient_id = request.POST['patient_id']
         deposit_amount = request.POST['deposit_amount']
@@ -159,9 +160,16 @@ def deposit_amount(request):
         messages.success(request, 'Amount deposited to the Patient  ' + patient.PATIENT_NAME + ' Successfully!')
         return redirect('deposit_amount')
 
+def patientsearch(request):
+    patient_id = request.GET.get('patient_id')
+    patient_name = ADMIT_PATIENT.objects.get(PATIENT_ID=patient_id).PATIENT_NAME
+    father_name = ADMIT_PATIENT.objects.get(PATIENT_ID=patient_id).PATIENT_FHR_HUS_NAME
+    return render(request, 'partials/patient_search.html', context={'patient_name':patient_name,'father_name':father_name})
+
 def pt_d_exp(request):
     if request.method != 'POST':
-        return render(request, 'pt_d_exp.html')
+        patients = ADMIT_PATIENT.objects.all()
+        return render(request, 'pt_d_exp.html', context={'patients':patients})
     else:
         patient_id = request.POST['patient_id']
         expenseDateTime = request.POST['expenseDate'] + " " + request.POST['expenseTime']
