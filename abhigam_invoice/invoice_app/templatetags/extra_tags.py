@@ -123,7 +123,7 @@ def grand_total(patient):
     patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
     days1 = (last_date - patient_admit_date).days
     grand_total += room_cost*days1
-    grand_total += patient.PATIENT_PHYSICIAN_CHARGE*days1
+    grand_total += patient.PATIENT_PHYSICIAN_CHARGE*(days1+1)
     deposits = PATIENT_DEPOSIT.objects.filter(PATIENT_ID=patient)
     depo_total = 0
     for depo in deposits:
