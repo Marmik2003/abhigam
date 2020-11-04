@@ -96,14 +96,16 @@ Abhigam | All Patients Profile
 </section>
 <script>
     $(document).ready(function(){
-        for(i=1;i<={{patients.count}};i++){
-            var debit_val = parseInt(document.getElementsById("debit_"+i).innerHTML);
-            if(debit_val<0){
-                document.getElementById("debit_"+i).style.color = "red";
-                document.getElementById("debit_"+i).style.fontWeight = "800";
+        for(i=1;i <= {{patients.count}}; i++){
+            var debitval = parseInt($('#debit_'+i).text());
+            if(debitval<0){
+                $('#debit_'+i).css({'color':'red', 'font-size':'18px', 'font-weight':'800'});
             }
         }
+        console.log('ok');
+
     });
+
 </script>
 <script type="text/javascript">
     function tableToExcel(tableID, filename = ''){
@@ -144,7 +146,7 @@ $("#gen_xl").click(function(){
 $(document).ready(function() {
     $('#pt_table').DataTable(
       {
-        "order":[[0,"asc"]]
+        "order":[[1,"asc"]]
       }
     );
 } );

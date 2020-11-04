@@ -31,8 +31,20 @@ Patient ID: {{patient.PATIENT_ID}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb
             <td>{{ ind_exp.PHARMACY_EXPENSE }}</td>
             <td>{{ ind_exp.HOSPITAL_EXPANSES }}</td>
             <td>{{ ind_exp.OTHER_EXPENSE }}</td>
-            <td>{% hosp_debit ind_exp patient %}</td>
+            <td id="debit_{{ forloop.counter }}">{% hosp_debit ind_exp patient %}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+<script>
+    $(document).ready(function(){
+        for(i=1;i <= {{patients.count}}; i++){
+            var debitval = parseInt($('#debit_'+i).text());
+            if(debitval<0){
+                $('#debit_'+i).css({'color':'red', 'font-size':'18px', 'font-weight':'800'});
+            }
+        }
+        console.log('ok');
+
+    });
+</script>
