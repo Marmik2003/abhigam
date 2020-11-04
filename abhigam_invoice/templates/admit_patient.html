@@ -175,4 +175,15 @@ Abhigam | Admit Patient
     </div>
 </div>
 </section>
+<script>
+  var d = new Date();
+
+  var month = d.getMonth()+1;
+  var day = d.getDate();
+
+  var output = d.getFullYear() + '-' +(month<10 ? '0' : '') + month + '-' +(day<10 ? '0' : '') + day;
+  var time = d.getHours() + ":" + (d.getMinutes()<10 ? '0':'')+d.getMinutes()
+  $(document).ready(function(){$('#admitDate').attr({'value':output}); $('#admitTime').attr({'value':time});});
+
+</script>
 {% endblock container-fluid %}

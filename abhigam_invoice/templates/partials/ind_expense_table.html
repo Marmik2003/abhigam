@@ -18,27 +18,27 @@ Patient ID: {{patient.PATIENT_ID}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb
         <th>Hospital Debit</th>
     </thead>
     <tbody>
-        {% for ind_exp in pt_d_exp_all %}
+        {% for day in days %}
         <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ patient.PATIENT_DISCHARGE_DATE_TIME|default_if_none:"" }}</td>
-            <td>{{ ind_exp.EXPENSE_DATETIME|date:"d/m/Y" }}</td>
+            <td>{% get_date patient day %}</td>
             <td>{{ patient.PATIENT_ROOM_TYPE }}</td>
-            <td>{% physician_visit patient %}</td>
-            <td>{% depositamount patient ind_exp.EXPENSE_DATETIME %}</td>
-            <td>{{ ind_exp.RADIOLOGY_EXPENSE }}</td>
-            <td>{{ ind_exp.PATHOLOGY_EXPENSE }}</td>
-            <td>{{ ind_exp.PHARMACY_EXPENSE }}</td>
-            <td>{{ ind_exp.HOSPITAL_EXPANSES }}</td>
-            <td>{{ ind_exp.OTHER_EXPENSE }}</td>
-            <td id="debit_{{ forloop.counter }}">{% hosp_debit ind_exp patient %}</td>
+            <td>1</td>
+            <td>{% depositamount patient day %}</td>
+            <td>{% radio_pt patient day %}</td>
+            <td>{% patho_pt patient day %}</td>
+            <td>{% pharma_pt patient day %}</td>
+            <td>{% hosp_pt patient day %}</td>
+            <td>{% other_pt patient day %}</td>
+            <td id="debit_{{ forloop.counter }}">{% hosp_debit patient day %}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 <script>
     $(document).ready(function(){
-        for(i=1;i <= {{patients.count}}; i++){
+        for(i=1;i <= {{days|length}}; i++){
             var debitval = parseInt($('#debit_'+i).text());
             if(debitval<0){
                 $('#debit_'+i).css({'color':'red', 'font-size':'18px', 'font-weight':'800'});

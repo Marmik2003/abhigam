@@ -1,0 +1,114 @@
+{% load static %}
+{% load extra_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice</title>
+    <link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+    <!-- iCheck -->
+    <style>
+        .new-jumbo{
+            background-color: #d3d3d3;
+            border-radius: 50px;
+        }
+        .table1{
+            padding-left: 5px;
+            padding-top: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="new-jumbo">
+        <div class="container">
+          <h1 class="display-4">
+              <img src="{% static 'images/ABHIGAM-LOGO.png' %}" width="400px" height="200px" alt="">
+          </h1>
+        </div>
+      </div>
+    <br><br>
+    
+    <table border="1px" class="table1">
+        <tr>
+            <td>Patient ID:</td>
+            <td>{{ patient.PATIENT_ID }}</td>
+        </tr>
+        <tr>
+            <td>Patient Name:</td>
+            <td>{{ patient.PATIENT_NAME }}</td>
+        </tr>
+        <tr>
+            <td>Patient's age</td>
+            <td>{{ patient.PATIENT_AGE }}</td>
+        </tr>
+        <tr>
+            <td>Patient's Father/Husband Name:</td>
+            <td>{{ patient.PATIENT_FHR_HUS_NAME }}</td>
+        </tr>
+        <tr>
+            <td>Patient's Gender:</td>
+            <td>{{ patient.PATIENT_SEX }}</td>
+        </tr>
+        <tr>
+            <td>Patient's Admit Date and Time:</td>
+            <td>{{ patient.PATIENT_ADMIT_DATE_TIME|date:"d/m/Y" }}</td>
+        </tr>
+        <tr>
+            <td>Patient Refer by:</td>
+            <td>{{ patient.PATIENT_REFER_BY }}</td>
+        </tr>
+        <tr>
+            <td>Patient Information given by:</td>
+            <td>{{ patient.PATIENT_INFORMATION_GIVEN_BY }}</td>
+        </tr>
+        <tr>
+            <td>Patient's E-mail:</td>
+            <td>{{ patient.PATIENT_EMAIL_ID }}</td>
+        </tr>
+        <tr>
+            <td>Patient Relative's E-mail:</td>
+            <td>{{ patient.PATIENT_RELATIVE_EMAIL }}</td>
+        </tr>
+        <tr>
+            <td>Patient's Phone:</td>
+            <td>{{ patient.PATIENT_MOB_NUM }}</td>
+        </tr>
+        <tr>
+            <td>Patient Relative's Phone:</td>
+            <td>{{ patient.PATIENT_RELATIVE_MOB_NUM }}</td>
+        </tr>
+        <tr>
+            <td>Patient Relative Relation:</td>
+            <td>{{ patient.PATIENT_RELATION }}</td>
+        </tr>
+        <tr>
+            <td>Patient's Address:</td>
+            <td>{{ patient.PATIENT_STREET1 }}, <br> {{ patient.PATIENT_STREET2 }}, <br> {{ patient.PATIENT_CITY }},{{ patient.PATIENT_DISTRICT }},{{ patient.PATIENT_STATE }} - {{ patient.PATIENT_PINCODE }} </td>
+        </tr>
+        <tr>
+            <td>Has MediClaim?</td>
+            <td> {{ patient.PATIENT_MED_CLAIM }} </td>
+        </tr>
+        <tr>
+            <td>Patient ID Proof ({{ patient.PATIENT_ID_PROOF_NAME }}) :</td>
+            <td> {{ patient.PATIENT_ID_PROOF_NUMBER }} </td>
+        </tr>
+        <tr>
+            <td>Patient Treating Doctor:</td>
+            <td> {{ patient.PATIENT_TREATING_DR }} </td>
+        </tr>
+        <tr>
+            <td>Physician Charge:</td>
+            <td> {{ patient.PATIENT_PHYSICIAN_CHARGE }} </td>
+        </tr>
+        <tr>
+            <td>Room:</td>
+            <td> {{ patient.PATIENT_ROOM_TYPE }} </td>
+        </tr>
+        <tr>
+            <td>Room Price:</td>
+            <td> {{ patient.PATIENT_ROOM_PRICE }} </td>
+        </tr>
+    </table>
+</body>
+</html>

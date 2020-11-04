@@ -1,5 +1,5 @@
 from django import template
-from datetime import datetime
+from datetime import datetime, timedelta
 import dateutil.parser
 from ..models import ADMIT_PATIENT, PATIENT_DAILY_EXPENSE, PATIENT_DEPOSIT, ROOM_TYPE
 
@@ -17,30 +17,123 @@ def patientdays(patient):
     patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
     days1 = (last_date - patient_admit_date).days
     print(patient_admit_date)
-    return str(days1)
+    return str(days1+1)
 
 @register.simple_tag
-def depositamount(patient, ind_exp):
+def depositamount(patient, day):
+    patient_admit_date = patient.PATIENT_ADMIT_DATE_TIME.date()
+    this_date = patient_admit_date + timedelta(days=int(day))
     try:
-        deposit_date = dateutil.parser.parse(ind_exp.strftime('%m/%d/%Y')).date()
+        deposit_date = dateutil.parser.parse(this_date.strftime('%m/%d/%Y')).date()
         deposit_amount = PATIENT_DEPOSIT.objects.get(PATIENT_ID=patient, DEPOSIT_DATE=deposit_date).DEPOSIT_AMOUNT
     except:
         deposit_amount = 0
     return str(deposit_amount)
 
 @register.simple_tag
-def hosp_debit(ind_exp, patient):
-    expense = PATIENT_DAILY_EXPENSE.objects.get(id=ind_exp.id)
-    room = patient.PATIENT_ROOM_TYPE
+def get_date(patient, day):
+    admit_date = patient.PATIENT_ADMIT_DATE_TIME.date()
+    this_date = admit_date + timedelta(days=int(day))
+    return dateutil.parser.parse(this_date.strftime('%d/%m/%Y'))
+
+@register.simple_tag
+def radio_pt(patient, day):
+    patient_admit_date = patient.PATIENT_ADMIT_DATE_TIME.date()
+    this_date = patient_admit_date + timedelta(days=int(day))
+    radio_cost = 0
+    try:
+        expenses = PATIENT_DAILY_EXPENSE.objects.filter(EXPENSE_DATETIME__date=this_date, PATIENT_ID=patient)
+        
+        for expense in expenses:
+            radio_cost += expense.RADIOLOGY_EXPENSE
+    except:
+        pass
+    return str(radio_cost)
+
+@register.simple_tag
+def patho_pt(patient, day):
+    patient_admit_date = patient.PATIENT_ADMIT_DATE_TIME.date()
+    this_date = patient_admit_date + timedelta(days=int(day))
+    patho_cost = 0
+    try:
+        expenses = PATIENT_DAILY_EXPENSE.objects.filter(EXPENSE_DATETIME__date=this_date, PATIENT_ID=patient)
+        
+        for expense in expenses:
+            patho_cost += expense.PATHOLOGY_EXPENSE
+    except:
+        pass
+    return str(patho_cost)
+
+@register.simple_tag
+def pharma_pt(patient, day):
+    patient_admit_date = patient.PATIENT_ADMIT_DATE_TIME.date()
+    this_date = patient_admit_date + timedelta(days=int(day))
+    pharma_cost = 0
+    try:
+        expenses = PATIENT_DAILY_EXPENSE.objects.filter(EXPENSE_DATETIME__date=this_date, PATIENT_ID=patient)
+        
+        for expense in expenses:
+            pharma_cost += expense.PHARMACY_EXPENSE
+    except:
+        pass
+    return str(pharma_cost)
+
+@register.simple_tag
+def hosp_pt(patient, day):
+    patient_admit_date = patient.PATIENT_ADMIT_DATE_TIME.date()
+    this_date = patient_admit_date + timedelta(days=int(day))
+    hosp_cost = 0
+    try:
+        expenses = PATIENT_DAILY_EXPENSE.objects.filter(EXPENSE_DATETIME__date=this_date, PATIENT_ID=patient)
+        
+        for expense in expenses:
+            hosp_cost += expense.HOSPITAL_EXPANSES
+    except:
+        pass
+    return str(hosp_cost)
+
+@register.simple_tag
+def other_pt(patient, day):
+    patient_admit_date = patient.PATIENT_ADMIT_DATE_TIME.date()
+    this_date = patient_admit_date + timedelta(days=int(day))
+    other_cost = 0
+    try:
+        expenses = PATIENT_DAILY_EXPENSE.objects.filter(EXPENSE_DATETIME__date=this_date, PATIENT_ID=patient)
+        
+        for expense in expenses:
+            other_cost += expense.OTHER_EXPENSE
+    except:
+        pass
+    return str(other_cost)
+
+@register.simple_tag
+def hosp_debit(patient, day):
+    patient_admit_date = patient.PATIENT_ADMIT_DATE_TIME.date()
+    this_date = patient_admit_date + timedelta(days=int(day))
+    expenses = PATIENT_DAILY_EXPENSE.objects.filter(PATIENT_ID=patient, EXPENSE_DATETIME__date=this_date)
     room_cost = patient.PATIENT_ROOM_PRICE
     # try:
     #     deposit_date = dateutil.parser.parse(ind_exp.strftime('%m/%d/%Y')).date()
     #     deposit_amount = PATIENT_DEPOSIT.objects.get(PATIENT_ID=patient, DEPOSIT_DATE=deposit_date).DEPOSIT_AMOUNT
     # except:
     #     deposit_amount = 0
-    deposit_date = dateutil.parser.parse(ind_exp.EXPENSE_DATETIME.strftime('%m/%d/%Y')).date()
-    deposit_amount = PATIENT_DEPOSIT.objects.get(PATIENT_ID=patient, DEPOSIT_DATE=deposit_date).DEPOSIT_AMOUNT
-    return str(deposit_amount - (expense.RADIOLOGY_EXPENSE+expense.PATHOLOGY_EXPENSE+expense.PHARMACY_EXPENSE+expense.HOSPITAL_EXPANSES+expense.OTHER_EXPENSE) - room_cost - patient.PATIENT_PHYSICIAN_CHARGE)
+    
+    try:
+        deposit_date = dateutil.parser.parse(this_date.strftime('%m/%d/%Y')).date()
+        deposit_amount = PATIENT_DEPOSIT.objects.get(PATIENT_ID=patient, DEPOSIT_DATE=deposit_date).DEPOSIT_AMOUNT
+    except:
+        deposit_amount = 0
+    total_exp = 0
+    try:
+        for expense in expenses:
+            total_exp += expense.RADIOLOGY_EXPENSE
+            total_exp += expense.PATHOLOGY_EXPENSE
+            total_exp += expense.PHARMACY_EXPENSE
+            total_exp += expense.HOSPITAL_EXPANSES
+            total_exp += expense.OTHER_EXPENSE
+    except:
+        pass
+    return str(deposit_amount - total_exp - room_cost - patient.PATIENT_PHYSICIAN_CHARGE)
 
 @register.simple_tag
 def physician_visit(patient):
@@ -53,8 +146,9 @@ def physician_visit(patient):
         last_date = datetime.now().date()
     patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
     days1 = (last_date - patient_admit_date).days
-    print(patient_admit_date)
-    return str(days1+1)
+    return str(days1+2)
+
+
 
 @register.simple_tag
 def deposit_total(patient):
@@ -107,7 +201,6 @@ def other_total(patient):
 @register.simple_tag
 def grand_total(patient):
     expenses = PATIENT_DAILY_EXPENSE.objects.filter(PATIENT_ID=patient)
-    room = patient.PATIENT_ROOM_TYPE
     room_cost = patient.PATIENT_ROOM_PRICE
     grand_total = 0
     for grand in expenses:
@@ -121,9 +214,9 @@ def grand_total(patient):
     else:
         last_date = datetime.now().date()
     patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
-    days1 = (last_date - patient_admit_date).days
+    days1 = (last_date - patient_admit_date).days + 1
     grand_total += room_cost*days1
-    grand_total += patient.PATIENT_PHYSICIAN_CHARGE*(days1+1)
+    grand_total += patient.PATIENT_PHYSICIAN_CHARGE*(days1)
     deposits = PATIENT_DEPOSIT.objects.filter(PATIENT_ID=patient)
     depo_total = 0
     for depo in deposits:

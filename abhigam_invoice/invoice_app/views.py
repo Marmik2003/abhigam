@@ -1,6 +1,8 @@
 import os
 from django.shortcuts import render, redirect
 from pytz import UTC as utc_pytz
+from datetime import datetime
+from dateutil import parser
 from io import BytesIO
 from  django.template.loader import get_template
 from django.http import HttpResponse
@@ -142,8 +144,9 @@ def admit_patient(request):
             PATIENT_ROOM_PRICE=room_price
         )
         patient_save.save()
-        messages.success(request, 'Patient admitted successfully!')
-        return redirect('admit_patient')
+        patient_pdf_data = ADMIT_PATIENT.objects.get(PATIENT_ID=patient_id)
+        pdf = render_to_pdf('pdf_admit_patient.html',('PatientId'+patient_id),{'patient':patient_pdf_data})
+        return HttpResponse(pdf, content_type='application/pdf')
 
 def deposit_amount(request):
     if request.method != 'POST':
@@ -160,7 +163,7 @@ def deposit_amount(request):
             return redirect('deposit_amount')
         deposit = PATIENT_DEPOSIT(PATIENT_ID=patient,DEPOSIT_AMOUNT=deposit_amount,DEPOSIT_DATE=deposit_date)
         deposit.save()
-        messages.success(request, 'Amount deposited to the Patient  ' + patient.PATIENT_NAME + ' Successfully!')
+        messages.success(request, 'Amount deposited to the Patient ' + patient.PATIENT_NAME + ' Successfully!')
         return redirect('deposit_amount')
 
 def patientsearch(request):
@@ -178,6 +181,8 @@ def pt_d_exp(request):
         expenseDateTime = request.POST['expenseDate'] + " " + request.POST['expenseTime']
         radioCost = request.POST['Radiology']
         pathoCost = request.POST['Pathology']
+
+        #here is change
         pharmaCost = request.POST['Pharmacy']
         hospCost = request.POST['Hospital_Expenses']
         otherCost = request.POST['Other']
@@ -205,10 +210,14 @@ def ind_pt_prof(request):
 def get_patient_prof(request):
     patient_id = request.GET.get('patient_id')
     patient = ADMIT_PATIENT.objects.get(PATIENT_ID=patient_id)
-    date_deposit = PATIENT_DEPOSIT.objects.filter(PATIENT_ID=patient)
-    
+    if patient.PATIENT_DISCHARGE_DATE_TIME != None:
+        last_date = patient.PATIENT_DISCHARGE_DATE_TIME.date()
+    else:
+        last_date = datetime.now().date()
+    patient_admit_date = parser.parse(patient.PATIENT_ADMIT_DATE_TIME.strftime('%m/%d/%Y')).date()
+    days1 = (last_date - patient_admit_date).days + 1
     pt_d_exp_all = PATIENT_DAILY_EXPENSE.objects.filter(PATIENT_ID=patient)
-    return render(request, 'partials/ind_expense_table.html', context={'pt_d_exp_all':pt_d_exp_all,'all_depo':date_deposit ,'patient':patient})
+    return render(request, 'partials/ind_expense_table.html', context={'pt_d_exp_all':pt_d_exp_all, 'patient':patient, 'days':list(range(days1+1))})
 
 def all_pt_prof(request):
     patients = ADMIT_PATIENT.objects.all()
@@ -272,8 +281,8 @@ def bill_generator(request):
         patient_id = request.POST['patient_id']
         now = datetime.now().astimezone(utc_pytz)
         now_utc = now.replace(tzinfo=utc_pytz)
-        pan_no = request.POST['pan_no']
-        cin_no = request.POST['cin_no']
+        pan_no = "ABSFA9076B"
+        cin_no = "137C0004672"
         patient = ADMIT_PATIENT.objects.get(PATIENT_ID=patient_id)
         patient.PATIENT_DISCHARGE_DATE_TIME = now_utc
         patient.save()
