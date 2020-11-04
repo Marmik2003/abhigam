@@ -16,15 +16,41 @@
             padding-left: 5px;
             padding-top: 3px;
         }
+        .table2{
+            padding-left: 5px;
+            padding-top: 10px;
+        }
+        .table3{
+            font-size: 15px;
+            padding-left: 5px;
+            padding-top: 3px;
+        }
+        h1{
+            font-size: 24px;
+            font-weight: 200;
+        }
     </style>
 </head>
 <body>
     <div class="new-jumbo">
-        <div class="container">
-          <h1 class="display-4">
-              <img src="{% static 'images/ABHIGAM-LOGO.png' %}" width="600px" height="300px" alt="">
-          </h1>
-        </div>
+        <table class="new-jumbo">
+            <tr>
+                <td valign="top">
+                    <table>
+                        <tr>
+                            <td class="table2" valign="top"><h1>Abhigam Covid Care Hospital</h1></td>
+                        </tr>
+                        <tr>
+                            <td class="table3">First Floor, Avishkar Hospital, Motipura,</td>
+                        </tr>
+                        <tr>
+                            <td class="table3">Himatnagar, Gujarat, India - 383001</td>
+                        </tr>
+                    </table>
+                </td>
+                <td><img src="{% static 'images/ABHIGAM-LOGO.png' %}" width="600px" height="230px" alt=""></td>
+            </tr>
+        </table>
       </div>
     <br>
     
@@ -69,15 +95,16 @@
                     </tr>
                     <tr></tr>
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <table>
                                 <tr>
-                                    <td valign="top"><h5><b>Patient Address: </b></h5></td>
-                                    <td>{{patient.PATIENT_STREET1}} <br> {{patient.PATIENT_STREET2}} <br> {{patient.PATIENT_CITY}}, {{patient.PATIENT_DISTRICT}}, {{patient.PATIENT_STATE}} - {{patient.PATIENT_PINCODE}}</td>
+                                    <td valign="top" width="30%"><h5><b>Patient Address: </b></h5></td>
+                                    <td>{{patient.PATIENT_STREET1}} <br> {{patient.PATIENT_STREET2}} <br> {{patient.PATIENT_CITY}}, {{patient.PATIENT_DISTRICT}} - {{patient.PATIENT_PINCODE}} <br> {{patient.PATIENT_STATE}}</td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
+                    <tr></tr>
                     <tr>
                         <td>
                             <h5><b>PAN Number :</b> {{pan_no}}</h5> 
@@ -90,6 +117,7 @@
             </td>
         </tr>
     </table>
+    <br><br><br>
     <table border="1px" class="table1">
         <tr>
             <td width="30%">
@@ -112,8 +140,8 @@
             <td>
             {% patientdays patient %}
             </td>
-            <td>{% room_type patient %}</td>
-            <td>{% total_room_cost patient %}</td>
+            <td>Rs. {% room_type patient %}</td>
+            <td>Rs. {% total_room_cost patient %}</td>
         </tr>
         <tr>
             <td>
@@ -123,9 +151,9 @@
                 1(Fixed)
             </td>
             <td>
-                {{ patient.PATIENT_PHYSICIAN_CHARGE }}
+                Rs. {{ patient.PATIENT_PHYSICIAN_CHARGE }}
             </td>
-            <td>{{ patient.PATIENT_PHYSICIAN_CHARGE }}</td>
+            <td>Rs. {{ patient.PATIENT_PHYSICIAN_CHARGE }}</td>
         </tr>
         <tr>
             <td>
@@ -135,11 +163,14 @@
                 {% patientdays patient %}
             </td>
             <td>
-                {% phy_cost patient %}
+                Rs. {% phy_cost patient %}
             </td>
-            <td>{% phy_cost_total patient %}</td>
+            <td>Rs. {% phy_cost_total patient %}</td>
         </tr>
-
+        <tr>
+            <td colspan="3"><b>Total</b></td>
+            <td><b>Rs. {% total_bill patient %}</b></td>
+        </tr>
     </table>
 </body>
 </html>

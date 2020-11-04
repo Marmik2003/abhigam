@@ -227,13 +227,11 @@ def grand_total(patient):
 
 @register.simple_tag
 def room_type(patient):
-    room = patient.PATIENT_ROOM_TYPE
     room_cost = patient.PATIENT_ROOM_PRICE
     return str(room_cost)
 
 @register.simple_tag
 def total_room_cost(patient):
-    room = patient.PATIENT_ROOM_TYPE
     room_cost = patient.PATIENT_ROOM_PRICE
     patient_admit_datetime = patient.PATIENT_ADMIT_DATE_TIME
     if patient.PATIENT_DISCHARGE_DATE_TIME != None:
@@ -243,7 +241,7 @@ def total_room_cost(patient):
     else:
         last_date = datetime.now().date()
     patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
-    days1 = (last_date - patient_admit_date).days 
+    days1 = (last_date - patient_admit_date).days + 1
     return str(room_cost*days1)
 
 @register.simple_tag
@@ -262,5 +260,20 @@ def phy_cost_total(patient):
     else:
         last_date = datetime.now().date()
     patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
-    days1 = (last_date - patient_admit_date).days
+    days1 = (last_date - patient_admit_date).days + 1
     return str(phy_cost*days1)
+
+@register.simple_tag
+def total_bill(patient):
+    phy_cost = patient.PATIENT_PHYSICIAN_CHARGE
+    room_cost = patient.PATIENT_ROOM_PRICE
+    patient_admit_datetime = patient.PATIENT_ADMIT_DATE_TIME
+    if patient.PATIENT_DISCHARGE_DATE_TIME != None:
+        # last_datetime = patient.PATIENT_DISCHARGE_DATE_TIME
+        # last_date = dateutil.parser.parse(last_datetime.strftime('%d/%m/%Y')).date()
+        last_date = patient.PATIENT_DISCHARGE_DATE_TIME.date()
+    else:
+        last_date = datetime.now().date()
+    patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
+    days1 = (last_date - patient_admit_date).days + 1
+    return str((phy_cost+room_cost)*days1 + phy_cost)
