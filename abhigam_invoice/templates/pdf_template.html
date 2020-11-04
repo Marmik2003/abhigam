@@ -65,14 +65,17 @@
                         <td>
                             <h5><b>Patient ID :</b>{{patient.PATIENT_ID}} </h5> 
                         </td>
-                        <td>
+                        
+                        
+                    </tr>
+                    <tr>
+                        <td colspan="2">
                             <h5><b>Patient Name:</b>{{patient.PATIENT_NAME}}</h5>
                             
                         </td>
-                        <td>
+                        <td colspan="2">
                             <h5><b>Father/Husband Name :</b>{{patient.PATIENT_FHR_HUS_NAME}}</h5> 
                         </td>
-                        
                     </tr>
                     <tr>
                         <td>
@@ -95,16 +98,22 @@
                     </tr>
                     <tr></tr>
                     <tr>
-                        <td colspan="2">
+                        <td colspan="3">
                             <table>
                                 <tr>
-                                    <td valign="top" width="30%"><h5><b>Patient Address: </b></h5></td>
-                                    <td>{{patient.PATIENT_STREET1}} <br> {{patient.PATIENT_STREET2}} <br> {{patient.PATIENT_CITY}}, {{patient.PATIENT_DISTRICT}} - {{patient.PATIENT_PINCODE}} <br> {{patient.PATIENT_STATE}}</td>
+                                    <td valign="top" width="20%"><h5><b>Patient Address: </b></h5></td>
+                                    <td>{{patient.PATIENT_STREET1}} <br> {{patient.PATIENT_STREET2}} <br>City: {{patient.PATIENT_CITY}}, District: {{patient.PATIENT_DISTRICT}} - Pincode: {{patient.PATIENT_PINCODE}} <br> State: {{patient.PATIENT_STATE}}</td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
                     <tr></tr>
+                    <tr>
+                        <td colspan="4"><h2><b><u>Billed by:</u></b></h2></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><h3>Abhigam Covid Care Hospital</h3></td>
+                    </tr>
                     <tr>
                         <td>
                             <h5><b>PAN Number :</b> {{pan_no}}</h5> 
@@ -119,7 +128,7 @@
     </table>
     <br><br><br>
     <table border="1px" class="table1">
-        <tr>
+        <tr style="background-color: #13e700; color:white; font-weight:800">
             <td width="30%">
                 Description
             </td>
@@ -133,7 +142,7 @@
                 Total(Price*Days)
             </td>
         </tr>
-        <tr>
+        <tr style="background-color: #bfffb9;">
             <td>
                 Covid Care Charges(HDU/HDU+Isolation)
             </td>
@@ -143,7 +152,7 @@
             <td>Rs. {% room_type patient %}</td>
             <td>Rs. {% total_room_cost patient %}</td>
         </tr>
-        <tr>
+        <tr style="background-color: #91ff8b;">
             <td>
                 Initial Physician Charge
             </td>
@@ -155,7 +164,7 @@
             </td>
             <td>Rs. {{ patient.PATIENT_PHYSICIAN_CHARGE }}</td>
         </tr>
-        <tr>
+        <tr style="background-color: #bfffb9;">
             <td>
                 Physician Consulting Charge
             </td>
@@ -167,7 +176,7 @@
             </td>
             <td>Rs. {% phy_cost_total patient %}</td>
         </tr>
-        <tr>
+        <tr style="background-color: #91ff8b;">
             <td colspan="3"><b>Total</b></td>
             <td><b>Rs. {% total_bill patient %}</b></td>
         </tr>

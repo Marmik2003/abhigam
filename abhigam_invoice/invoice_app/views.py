@@ -278,12 +278,17 @@ def bill_generator(request):
     if request.method != 'POST':
         return render(request, 'bill_generator.html', context={'billno':bill_id})
     else:
-        patient_id = request.POST['patient_id']
+        patient_id_raw = request.POST['patient_id']
+        patient_id = patient_id_raw
         now = datetime.now().astimezone(utc_pytz)
         now_utc = now.replace(tzinfo=utc_pytz)
         pan_no = "ABSFA9076B"
         cin_no = "137C0004672"
-        patient = ADMIT_PATIENT.objects.get(PATIENT_ID=patient_id)
+        try:
+            patient = ADMIT_PATIENT.objects.get(PATIENT_ID=patient_id)
+        except:
+            messages.error(request, 'No Patient was found')
+            return redirect('bill_generator')
         patient.PATIENT_DISCHARGE_DATE_TIME = now_utc
         patient.save()
         bill_data = PATIENT_BILL(PATIENT_ID=patient, PAN_NO=pan_no, CIN_NO=cin_no,PATIENT_BILL_NO=bill_id)
