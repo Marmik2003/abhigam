@@ -133,6 +133,7 @@ def admit_patient(request):
             PATIENT_STREET2=inputAddress2,
             PATIENT_CITY=inputCity,
             PATIENT_DISTRICT=inputDistrict,
+            PATIENT_STATE=inputState,
             PATIENT_PINCODE=inputPin,
             PATIENT_TREATING_DR=teating_doctor,
             PATIENT_PHYSICIAN_CHARGE=physician_charge,
