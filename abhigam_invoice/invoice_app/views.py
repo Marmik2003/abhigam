@@ -295,6 +295,18 @@ def reference_table(request):
     patients = ADMIT_PATIENT.objects.filter(PATIENT_REFER_BY=dr)
     return render(request, 'reference_table.html', context={'patients':patients})
 
+def patient_status(request):
+    return render(request, 'patient_status.html')
+
+def patient_status_table(request):
+    status = request.GET.get('patient_status')
+    if status == 'active':
+        patients = ADMIT_PATIENT.objects.filter(PATIENT_DISCHARGE_DATE_TIME=None)
+        return render(request, 'partials/active_patient_table.html', context={'patients':patients})
+    else:
+        patients = ADMIT_PATIENT.objects.exclude(PATIENT_DISCHARGE_DATE_TIME=None)
+        return render(request, 'partials/inactive_patient_table.html', context={'patients':patients})
+
 def invoice_maker(request):
     if request.method != 'POST':
         return render(request, 'invoice_maker.html')
@@ -309,9 +321,6 @@ def invoice_maker(request):
         deposit         = request.POST['deposit']
         discount        = request.POST['discount']
         hosp_credit     = request.POST['hosp_credit']
-
-
-
         data = {'patient_name':patient_name, 'admit_date':admit_date, 'discharge_date':discharge_date, 'days':days, 'cpd':cpd, 'phy_visit':phy_visit, 'total_bill': total_bill, 'deposit':deposit, 'discount':discount, 'hosp_credit':hosp_credit}
 
         pdf = render_to_pdf('pdf_template.html', data)

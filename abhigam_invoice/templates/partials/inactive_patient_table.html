@@ -1,0 +1,22 @@
+<table class="table table-responsive" width="100%">
+    <thead>
+        <th>No</th>
+        <th>Patient ID</th>
+        <th width="40%">Patient Name</th>
+        <th width="20%">Phone Number</th>
+        <th>Admit Date</th>
+        <th>Discharge Date</th>
+    </thead>
+    <tbody>
+    {% for patient in patients %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ patient.PATIENT_ID }}</td>
+            <td>{{ patient.PATIENT_NAME }}</td>
+            <td>{{ patient.PATIENT_MOB_NUM }}</td>
+            <td>{{ patient.PATIENT_ADMIT_DATE_TIME|date:"d/m/Y" }}</td>
+            <td>{{ patient.PATIENT_DISCHARGE_DATE_TIME|date:"d/m/Y" }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

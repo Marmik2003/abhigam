@@ -14,6 +14,8 @@ urlpatterns = [
     path('bill_generator', views.bill_generator, name='bill_generator'),
     path('reference_report', views.reference_report, name='reference_report'),
     path('reference_table', views.reference_table, name='reference_table'),
+    path('patient_status', views.patient_status, name='patient_status'),
+    path('patient_status_table', views.patient_status_table, name='patient_status_table'),
     path('invoice_maker', views.invoice_maker, name='invoice_maker'),
     path('invoice_data', views.invoice_data, name='invoice_data')
 ]
