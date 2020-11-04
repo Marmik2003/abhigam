@@ -32,7 +32,7 @@ def depositamount(patient, ind_exp):
 def hosp_debit(ind_exp, patient):
     expense = PATIENT_DAILY_EXPENSE.objects.get(id=ind_exp.id)
     room = patient.PATIENT_ROOM_TYPE
-    room_cost = room.ROOM_PRICE
+    room_cost = patient.PATIENT_ROOM_PRICE
     # try:
     #     deposit_date = dateutil.parser.parse(ind_exp.strftime('%m/%d/%Y')).date()
     #     deposit_amount = PATIENT_DEPOSIT.objects.get(PATIENT_ID=patient, DEPOSIT_DATE=deposit_date).DEPOSIT_AMOUNT
@@ -108,7 +108,7 @@ def other_total(patient):
 def grand_total(patient):
     expenses = PATIENT_DAILY_EXPENSE.objects.filter(PATIENT_ID=patient)
     room = patient.PATIENT_ROOM_TYPE
-    room_cost = room.ROOM_PRICE
+    room_cost = patient.PATIENT_ROOM_PRICE
     grand_total = 0
     for grand in expenses:
         grand_total += (grand.PATHOLOGY_EXPENSE + grand.PHARMACY_EXPENSE + grand.RADIOLOGY_EXPENSE + grand.HOSPITAL_EXPANSES + grand.OTHER_EXPENSE)
@@ -134,13 +134,13 @@ def grand_total(patient):
 @register.simple_tag
 def room_type(patient):
     room = patient.PATIENT_ROOM_TYPE
-    room_cost = room.ROOM_PRICE
+    room_cost = patient.PATIENT_ROOM_PRICE
     return str(room_cost)
 
 @register.simple_tag
 def total_room_cost(patient):
     room = patient.PATIENT_ROOM_TYPE
-    room_cost = room.ROOM_PRICE
+    room_cost = patient.PATIENT_ROOM_PRICE
     patient_admit_datetime = patient.PATIENT_ADMIT_DATE_TIME
     if patient.PATIENT_DISCHARGE_DATE_TIME != None:
         # last_datetime = patient.PATIENT_DISCHARGE_DATE_TIME

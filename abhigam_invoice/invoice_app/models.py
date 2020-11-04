@@ -29,6 +29,7 @@ class ADMIT_PATIENT(models.Model):
     PATIENT_RELATION = models.CharField(max_length=45)
     PATIENT_MED_CLAIM = models.CharField(max_length=3)
     PATIENT_ROOM_TYPE = models.ForeignKey('ROOM_TYPE', on_delete=models.SET_NULL, null=True)
+    PATIENT_ROOM_PRICE = models.IntegerField()
     PATIENT_PHYSICIAN_CHARGE = models.IntegerField()
 
     def __str__(self):

@@ -106,6 +106,7 @@ def admit_patient(request):
         physician_charge = request.POST['physician_charge']
         mediclaim = request.POST['mediclaim']
         room_category_raw = request.POST['roomCategory']
+        room_price = request.POST['room_price']
         admitDateTime = admitDate + " " + admitTime
 
         teating_doctor = PATIENT_TREATING_DR.objects.get(id = treating_doctor_raw)
@@ -137,6 +138,7 @@ def admit_patient(request):
             PATIENT_PHYSICIAN_CHARGE=physician_charge,
             PATIENT_MED_CLAIM=mediclaim,
             PATIENT_ROOM_TYPE=room_category,
+            PATIENT_ROOM_PRICE=room_price
         )
         patient_save.save()
         messages.success(request, 'Patient admitted successfully!')

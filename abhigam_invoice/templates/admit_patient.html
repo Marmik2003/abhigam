@@ -148,13 +148,17 @@ Abhigam | Admit Patient
                         <option value="no" selected>No</option>
                       </select>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                       <label for="Phonerelative">Room Category</label>
                       <select name="roomCategory" id="roomCategory" class="form-control" required>
                         {% for room in room_types %}
                         <option value="{{room.id}}">{{room.ROOM_TYPE}}</option>
                         {% endfor %}
                       </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <label for="roomprice">Room Price</label>
+                      <input type="number" class="form-control" name="room_price" id="room_price" placeholder="Room Price" required>
                     </div>
                   </div>
                   <div class="form-group">
