@@ -40,7 +40,7 @@ def hosp_debit(ind_exp, patient):
     #     deposit_amount = 0
     deposit_date = dateutil.parser.parse(ind_exp.EXPENSE_DATETIME.strftime('%m/%d/%Y')).date()
     deposit_amount = PATIENT_DEPOSIT.objects.get(PATIENT_ID=patient, DEPOSIT_DATE=deposit_date).DEPOSIT_AMOUNT
-    return str(deposit_amount - (expense.RADIOLOGY_EXPENSE+expense.PATHOLOGY_EXPENSE+expense.PHARMACY_EXPENSE+expense.HOSPITAL_EXPANSES+expense.OTHER_EXPENSE) - room_cost)
+    return str(deposit_amount - (expense.RADIOLOGY_EXPENSE+expense.PATHOLOGY_EXPENSE+expense.PHARMACY_EXPENSE+expense.HOSPITAL_EXPANSES+expense.OTHER_EXPENSE) - room_cost - patient.PATIENT_PHYSICIAN_CHARGE)
 
 @register.simple_tag
 def physician_visit(patient):
@@ -123,6 +123,7 @@ def grand_total(patient):
     patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
     days1 = (last_date - patient_admit_date).days
     grand_total += room_cost*days1
+    grand_total += patient.PATIENT_PHYSICIAN_CHARGE*days1
     deposits = PATIENT_DEPOSIT.objects.filter(PATIENT_ID=patient)
     depo_total = 0
     for depo in deposits:
