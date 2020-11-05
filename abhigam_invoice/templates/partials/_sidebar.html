@@ -85,6 +85,21 @@
   </li>
 
   <li class="nav-item">
+    <a href="{% url 'discharge_patient' %}" 
+    {% if 'discharge_patient' in request.path %}
+    class="nav-link active"
+    {% else %}
+    class="nav-link"
+    {% endif %}
+    >
+      <i class="fa fa-heartbeat" style="color: rgb(51, 0, 255)"></i>
+      <p>
+        Discharge Patient
+      </p>
+    </a>
+  </li> 
+
+  <li class="nav-item">
     <a href="{% url 'bill_generator' %}" 
     {% if 'bill_generator' in request.path %}
     class="nav-link active"

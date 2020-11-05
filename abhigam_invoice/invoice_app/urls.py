@@ -11,6 +11,7 @@ urlpatterns = [
     path('individual_patient_profile', views.ind_pt_prof, name='ind_pt_prof'),
     path('get_patient_prof', views.get_patient_prof, name='get_patient_prof'),
     path('all_patient_profile', views.all_pt_prof, name='all_pt_prof'),
+    path('discharge_patient', views.discharge_patient, name='discharge_patient'),
     path('bill_generator', views.bill_generator, name='bill_generator'),
     path('reference_report', views.reference_report, name='reference_report'),
     path('reference_table', views.reference_table, name='reference_table'),

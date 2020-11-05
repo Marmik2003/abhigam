@@ -265,6 +265,21 @@ def all_pt_prof(request):
 
     return render(request, 'all_pt_prof.html', context={'patients':patients, 'deposit_dict':deposit_dict})
 
+def discharge_patient(request):
+    if request.method != 'POST':
+        patients = ADMIT_PATIENT.objects.all()
+        return render(request, 'discharge_patient.html', context={'patients':patients})
+    else:
+        patient_id = request.POST['patient_id']
+        discharge_date = request.POST['discharge_date']
+        discharge_time = request.POST['discharge_time']
+        discharge_datetime = discharge_date + " " + discharge_time
+        patient = ADMIT_PATIENT.objects.get(PATIENT_ID=patient_id)
+        patient.PATIENT_DISCHARGE_DATE_TIME = discharge_datetime
+        patient.save()
+        messages.success(request, 'Patient discharged successfully!')
+        return redirect('discharge_patient')
+
 def bill_generator(request):
     patients = ADMIT_PATIENT.objects.all().order_by('PATIENT_ID')
     bills = list(PATIENT_BILL.objects.all())
@@ -281,8 +296,8 @@ def bill_generator(request):
     else:
         patient_id_raw = request.POST['patient_id']
         patient_id = patient_id_raw
-        now = datetime.now().astimezone(utc_pytz)
-        now_utc = now.replace(tzinfo=utc_pytz)
+        # now = datetime.now().astimezone(utc_pytz)
+        # now_utc = now.replace(tzinfo=utc_pytz)
         pan_no = "ABSFA9076B"
         cin_no = "137C0004672"
         try:
@@ -290,8 +305,8 @@ def bill_generator(request):
         except:
             messages.error(request, 'No Patient was found')
             return redirect('bill_generator')
-        patient.PATIENT_DISCHARGE_DATE_TIME = now_utc
-        patient.save()
+        # patient.PATIENT_DISCHARGE_DATE_TIME = now_utc
+        # patient.save()
         bill_data = PATIENT_BILL(PATIENT_ID=patient, PAN_NO=pan_no, CIN_NO=cin_no,PATIENT_BILL_NO=bill_id)
         bill_data.save()
         data = {'patient':patient,'cin_no':cin_no,'pan_no':pan_no,'bill_id':bill_id}
