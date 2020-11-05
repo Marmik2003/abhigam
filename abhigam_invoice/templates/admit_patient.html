@@ -182,7 +182,7 @@ Abhigam | Admit Patient
   var day = d.getDate();
 
   var output = d.getFullYear() + '-' +(month<10 ? '0' : '') + month + '-' +(day<10 ? '0' : '') + day;
-  var time = d.getHours() + ":" + (d.getMinutes()<10 ? '0':'')+d.getMinutes()
+  var time = (d.getHours()<10 ? '0' : '')+d.getHours() + ":" + (d.getMinutes()<10 ? '0':'')+d.getMinutes()
   $(document).ready(function(){$('#admitDate').attr({'value':output}); $('#admitTime').attr({'value':time});});
 
 </script>

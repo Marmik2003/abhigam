@@ -266,6 +266,7 @@ def all_pt_prof(request):
     return render(request, 'all_pt_prof.html', context={'patients':patients, 'deposit_dict':deposit_dict})
 
 def bill_generator(request):
+    patients = ADMIT_PATIENT.objects.all().order_by('PATIENT_ID')
     bills = list(PATIENT_BILL.objects.all())
     if len(bills) != 0:
         last_bill_id_raw = PATIENT_BILL.objects.get(PATIENT_BILL_NO = bills[(len(bills)-1)]).PATIENT_BILL_NO
@@ -276,7 +277,7 @@ def bill_generator(request):
     bill_id = "ACB" + str(last_bill_id+1)
     print(bill_id)
     if request.method != 'POST':
-        return render(request, 'bill_generator.html', context={'billno':bill_id})
+        return render(request, 'bill_generator.html', context={'billno':bill_id, 'patients':patients})
     else:
         patient_id_raw = request.POST['patient_id']
         patient_id = patient_id_raw

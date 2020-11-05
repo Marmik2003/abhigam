@@ -35,7 +35,7 @@
                             <input type="date" class="form-control" id="expenseDate" name="expenseDate" placeholder="01/01/1001" required>
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="expensetime">Time</label>
+                            <label for="expenseTime">Time</label>
                             <input type="time" class="form-control" id="expenseTime" name="expenseTime" placeholder="01/01/1001" required>
                         </div>
                     </div>
@@ -102,12 +102,14 @@
     });
 </script>
 <script>
-    var today = new Date();
-    var dd = ('0' + today.getDate()).slice(-2);
-    var mm = ('0' + (today.getMonth()+1)).slice(-2); 
-    var yyyy = today.getFullYear();
-    var date = yyyy+'-'+mm+'-'+dd;
-    $("#admitDate").val(date);
-
-</script>
+    var d = new Date();
+  
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+  
+    var output = d.getFullYear() + '-' +(month<10 ? '0' : '') + month + '-' +(day<10 ? '0' : '') + day;
+    var time = (d.getHours()<10 ? '0' : '')+d.getHours() + ":" + (d.getMinutes()<10 ? '0':'')+d.getMinutes()
+    $(document).ready(function(){$('#expenseDate').attr({'value':output}); $('#expenseTime').attr({'value':time});});
+  
+  </script>
 {% endblock container-fluid %}
