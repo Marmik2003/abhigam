@@ -21,9 +21,8 @@
             padding-top: 10px;
         }
         .table3{
-            font-size: 15px;
+            font-size: 12px;
             padding-left: 5px;
-            padding-top: 3px;
         }
         h1{
             font-size: 24px;
@@ -35,7 +34,7 @@
     <div class="new-jumbo">
         <table class="new-jumbo">
             <tr>
-                <td valign="top">
+                <td valign="top" width="68%">
                     <table>
                         <tr>
                             <td class="table2" valign="top"><h1>Abhigam Covid Care Hospital</h1></td>
@@ -46,9 +45,15 @@
                         <tr>
                             <td class="table3">Himatnagar, Gujarat, India - 383001</td>
                         </tr>
+                        <tr>
+                            <td class="table3">Email: abhigamcovidcare@gmail.com</td>
+                        </tr>
+                        <tr>
+                            <td class="table3"> Phone 1: 8866433905 &nbsp;&nbsp;&nbsp;&nbsp; Phone 2 : 9327960233</td>
+                        </tr>
                     </table>
                 </td>
-                <td><img src="{% static 'images/ABHIGAM-LOGO.png' %}" width="600px" height="230px" alt=""></td>
+                <td><img src="{% static 'images/ABHIGAM-LOGO.png' %}" width="300px" height="234px" alt=""></td>
             </tr>
         </table>
       </div>
@@ -128,7 +133,7 @@
     </table>
     <br><br><br>
     <table border="1px" class="table1">
-        <tr style="background-color: #13e700; color:white; font-weight:800">
+        <tr style="font-weight:800">
             <td width="30%">
                 Description
             </td>
@@ -142,7 +147,7 @@
                 Total(Price*Days)
             </td>
         </tr>
-        <tr style="background-color: #bfffb9;">
+        <tr>
             <td>
                 Covid Care Charges(HDU/HDU+Isolation)
             </td>
@@ -152,7 +157,7 @@
             <td>Rs. {% room_type patient %}</td>
             <td>Rs. {% total_room_cost patient %}</td>
         </tr>
-        <tr style="background-color: #91ff8b;">
+        <tr>
             <td>
                 Initial Physician Charge
             </td>
@@ -164,7 +169,7 @@
             </td>
             <td>Rs. {{ patient.PATIENT_PHYSICIAN_CHARGE }}</td>
         </tr>
-        <tr style="background-color: #bfffb9;">
+        <tr>
             <td>
                 Physician Consulting Charge
             </td>
@@ -176,7 +181,7 @@
             </td>
             <td>Rs. {% phy_cost_total patient %}</td>
         </tr>
-        <tr style="background-color: #91ff8b;">
+        <tr>
             <td colspan="3"><b>Total</b></td>
             <td><b>Rs. {% total_bill patient %}</b></td>
         </tr>
