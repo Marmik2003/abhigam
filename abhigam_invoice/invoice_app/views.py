@@ -215,7 +215,7 @@ def get_patient_prof(request):
     else:
         last_date = datetime.now().date()
     patient_admit_date = parser.parse(patient.PATIENT_ADMIT_DATE_TIME.strftime('%m/%d/%Y')).date()
-    days1 = (last_date - patient_admit_date).days + 1
+    days1 = (last_date - patient_admit_date).days
     pt_d_exp_all = PATIENT_DAILY_EXPENSE.objects.filter(PATIENT_ID=patient)
     return render(request, 'partials/ind_expense_table.html', context={'pt_d_exp_all':pt_d_exp_all, 'patient':patient, 'days':list(range(days1+1))})
 

@@ -146,7 +146,7 @@ def physician_visit(patient):
         last_date = datetime.now().date()
     patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
     days1 = (last_date - patient_admit_date).days
-    return str(days1+2)
+    return str(days1+1)
 
 
 

@@ -1,11 +1,10 @@
 {% load extra_tags %}
 
-Patient ID: {{patient.PATIENT_ID}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Patient Name: {{patient.PATIENT_NAME}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Admit Date: {{patient.PATIENT_ADMIT_DATE_TIME|date:"d-m-Y"}}
+Patient ID: {{patient.PATIENT_ID}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Patient Name: {{patient.PATIENT_NAME}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Admit Date: {{patient.PATIENT_ADMIT_DATE_TIME|date:"d-m-Y"}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Discharge Date:{{ patient.PATIENT_DISCHARGE_DATE_TIME|default_if_none:"" }}
 <br>
 <table width="100%" class="table table-bordered table-hover table-responsive" >
     <thead>
         <th>No</th>
-        <th width="5%">Discharge Date</th>
         <th>Date</th>
         <th>Room</th>
         <th width="2%" style="text-align: center;">Physician visit</th>
@@ -21,7 +20,6 @@ Patient ID: {{patient.PATIENT_ID}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb
         {% for day in days %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ patient.PATIENT_DISCHARGE_DATE_TIME|default_if_none:"" }}</td>
             <td>{% get_date patient day %}</td>
             <td>{{ patient.PATIENT_ROOM_TYPE }}</td>
             <td>1</td>
@@ -34,6 +32,18 @@ Patient ID: {{patient.PATIENT_ID}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb
             <td id="debit_{{ forloop.counter }}">{% hosp_debit patient day %}</td>
         </tr>
         {% endfor %}
+        <tr>
+            <td colspan="2"><b>Total</b></td>
+            <td><b>{{ patient.PATIENT_ROOM_TYPE }}</b></td>
+            <td><b>{% physician_visit patient %}</b></td>
+            <td><b>{% deposit_total patient %}</b></td>
+            <td><b>{% radio_total patient %}</b></td>
+            <td><b>{% patho_total patient %}</b></td>
+            <td><b>{% pharma_total patient %}</b></td>
+            <td><b>{% hosp_total patient %}</b></td>
+            <td><b>{% other_total patient %}</b></td>
+            <td><b>{% grand_total patient %}</b></td>
+        </tr>
     </tbody>
 </table>
 <script>
