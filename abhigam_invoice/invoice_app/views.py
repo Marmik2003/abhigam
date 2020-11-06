@@ -114,39 +114,43 @@ def admit_patient(request):
         teating_doctor = PATIENT_TREATING_DR.objects.get(id = treating_doctor_raw)
         room_category  = ROOM_TYPE.objects.get(id=room_category_raw)
 
-        patient_save = ADMIT_PATIENT(
-            PATIENT_ID=patient_id, 
-            PATIENT_NAME=patient_name, 
-            PATIENT_AGE=age, 
-            PATIENT_FHR_HUS_NAME=fatherName, 
-            PATIENT_ADMIT_DATE_TIME=admitDateTime,
-            PATIENT_BIRTH_DATE=birthDate,
-            PATIENT_SEX=gender,
-            PATIENT_REFER_BY=referby,
-            PATIENT_INFORMATION_GIVEN_BY=information_givenby,
-            PATIENT_EMAIL_ID=patient_email,
-            PATIENT_RELATIVE_EMAIL=emailrelative,
-            PATIENT_MOB_NUM=patientPhone,
-            PATIENT_RELATIVE_MOB_NUM=Phonerelative,
-            PATIENT_RELATION=relation,
-            PATIENT_ID_PROOF_NAME=idproofname,
-            PATIENT_ID_PROOF_NUMBER=idproofnumber,
-            PATIENT_STREET1 = inputAddress1,
-            PATIENT_STREET2=inputAddress2,
-            PATIENT_CITY=inputCity,
-            PATIENT_DISTRICT=inputDistrict,
-            PATIENT_STATE=inputState,
-            PATIENT_PINCODE=inputPin,
-            PATIENT_TREATING_DR=teating_doctor,
-            PATIENT_PHYSICIAN_CHARGE=physician_charge,
-            PATIENT_MED_CLAIM=mediclaim,
-            PATIENT_ROOM_TYPE=room_category,
-            PATIENT_ROOM_PRICE=room_price
-        )
-        patient_save.save()
-        patient_pdf_data = ADMIT_PATIENT.objects.get(PATIENT_ID=patient_id)
-        pdf = render_to_pdf('pdf_admit_patient.html',('PatientId'+patient_id),{'patient':patient_pdf_data})
-        return HttpResponse(pdf, content_type='application/pdf')
+        try:
+            patient_save = ADMIT_PATIENT(
+                PATIENT_ID=patient_id, 
+                PATIENT_NAME=patient_name, 
+                PATIENT_AGE=age, 
+                PATIENT_FHR_HUS_NAME=fatherName, 
+                PATIENT_ADMIT_DATE_TIME=admitDateTime,
+                PATIENT_BIRTH_DATE=birthDate,
+                PATIENT_SEX=gender,
+                PATIENT_REFER_BY=referby,
+                PATIENT_INFORMATION_GIVEN_BY=information_givenby,
+                PATIENT_EMAIL_ID=patient_email,
+                PATIENT_RELATIVE_EMAIL=emailrelative,
+                PATIENT_MOB_NUM=patientPhone,
+                PATIENT_RELATIVE_MOB_NUM=Phonerelative,
+                PATIENT_RELATION=relation,
+                PATIENT_ID_PROOF_NAME=idproofname,
+                PATIENT_ID_PROOF_NUMBER=idproofnumber,
+                PATIENT_STREET1 = inputAddress1,
+                PATIENT_STREET2=inputAddress2,
+                PATIENT_CITY=inputCity,
+                PATIENT_DISTRICT=inputDistrict,
+                PATIENT_STATE=inputState,
+                PATIENT_PINCODE=inputPin,
+                PATIENT_TREATING_DR=teating_doctor,
+                PATIENT_PHYSICIAN_CHARGE=physician_charge,
+                PATIENT_MED_CLAIM=mediclaim,
+                PATIENT_ROOM_TYPE=room_category,
+                PATIENT_ROOM_PRICE=room_price
+            )
+            patient_save.save()
+            patient_pdf_data = ADMIT_PATIENT.objects.get(PATIENT_ID=patient_id)
+            pdf = render_to_pdf('pdf_admit_patient.html',('PatientId'+patient_id),{'patient':patient_pdf_data})
+            return HttpResponse(pdf, content_type='application/pdf')
+        except:
+            messages.error(request, 'Please refresh the page and re-enter details')
+            return redirect('admit_patient')
 
 def deposit_amount(request):
     if request.method != 'POST':
@@ -290,12 +294,12 @@ def bill_generator(request):
     else:
         last_bill_id = 0
     bill_id = "ACB" + str(last_bill_id+1)
-    print(bill_id)
     if request.method != 'POST':
         return render(request, 'bill_generator.html', context={'billno':bill_id, 'patients':patients})
     else:
         patient_id_raw = request.POST['patient_id']
         patient_id = patient_id_raw
+        patient_discount = request.POST['patient_discount']
         # now = datetime.now().astimezone(utc_pytz)
         # now_utc = now.replace(tzinfo=utc_pytz)
         pan_no = "ABSFA9076B"
@@ -307,11 +311,21 @@ def bill_generator(request):
             return redirect('bill_generator')
         # patient.PATIENT_DISCHARGE_DATE_TIME = now_utc
         # patient.save()
-        bill_data = PATIENT_BILL(PATIENT_ID=patient, PAN_NO=pan_no, CIN_NO=cin_no,PATIENT_BILL_NO=bill_id)
+        # try:
+        #     bill_data = PATIENT_BILL(PATIENT_ID=patient, PAN_NO=pan_no, CIN_NO=cin_no,PATIENT_BILL_NO=bill_id, PATIENT_DISCOUNT=patient_discount)
+        #     bill_data.save()
+        #     data = {'patient':patient,'cin_no':cin_no,'pan_no':pan_no,'bill_id':bill_id}
+        #     pdf = render_to_pdf('pdf_template.html', bill_id, data)
+        #     return HttpResponse(pdf, content_type='application/pdf')
+        # except:
+        #     messages.error(request, 'Please refresh the page and re-enter details')
+        #     return redirect('bill_generator')
+        bill_data = PATIENT_BILL(PATIENT_ID=patient, PAN_NO=pan_no, CIN_NO=cin_no,PATIENT_BILL_NO=bill_id, PATIENT_DISCOUNT=patient_discount)
         bill_data.save()
         data = {'patient':patient,'cin_no':cin_no,'pan_no':pan_no,'bill_id':bill_id}
         pdf = render_to_pdf('pdf_template.html', bill_id, data)
         return HttpResponse(pdf, content_type='application/pdf')
+
 
 def reference_report(request):
     patients = ADMIT_PATIENT.objects.all()

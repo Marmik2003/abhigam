@@ -65,6 +65,7 @@ class PATIENT_DAILY_EXPENSE(models.Model):
 class PATIENT_BILL(models.Model):
     PATIENT_BILL_NO = models.CharField(max_length=45)
     PATIENT_ID = models.ForeignKey('ADMIT_PATIENT', on_delete=models.CASCADE)
+    PATIENT_DISCOUNT = models.IntegerField()
     # PATIENT_NAME = models.ForeignKey('ADMIT_PATIENT', on_delete=models.CASCADE)
     # PATIENT_ADMIT_DATE_TIME = models.ForeignKey('ADMIT_PATIENT', on_delete=models.CASCADE)
     # PATIENT_DISCHARGE_DATE_TIME = models.DateTimeField()

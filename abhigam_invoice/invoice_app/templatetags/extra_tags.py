@@ -1,7 +1,7 @@
 from django import template
 from datetime import datetime, timedelta
 import dateutil.parser
-from ..models import ADMIT_PATIENT, PATIENT_DAILY_EXPENSE, PATIENT_DEPOSIT, ROOM_TYPE
+from ..models import ADMIT_PATIENT, PATIENT_DAILY_EXPENSE, PATIENT_DEPOSIT, ROOM_TYPE, PATIENT_BILL
 
 register = template.Library()
 
@@ -25,7 +25,10 @@ def depositamount(patient, day):
     this_date = patient_admit_date + timedelta(days=int(day))
     try:
         deposit_date = dateutil.parser.parse(this_date.strftime('%m/%d/%Y')).date()
-        deposit_amount = PATIENT_DEPOSIT.objects.get(PATIENT_ID=patient, DEPOSIT_DATE=deposit_date).DEPOSIT_AMOUNT
+        deposit_amount_all = PATIENT_DEPOSIT.objects.filter(PATIENT_ID=patient, DEPOSIT_DATE=deposit_date)
+        deposit_amount = 0
+        for depo in deposit_amount_all:
+            deposit_amount += depo.DEPOSIT_AMOUNT
     except:
         deposit_amount = 0
     return str(deposit_amount)
@@ -111,7 +114,7 @@ def hosp_debit(patient, day):
     patient_admit_date = patient.PATIENT_ADMIT_DATE_TIME.date()
     this_date = patient_admit_date + timedelta(days=int(day))
     expenses = PATIENT_DAILY_EXPENSE.objects.filter(PATIENT_ID=patient, EXPENSE_DATETIME__date=this_date)
-    room_cost = patient.PATIENT_ROOM_PRICE
+    room_cost = patient.PATIENT_ROOM_PRICE*day
     # try:
     #     deposit_date = dateutil.parser.parse(ind_exp.strftime('%m/%d/%Y')).date()
     #     deposit_amount = PATIENT_DEPOSIT.objects.get(PATIENT_ID=patient, DEPOSIT_DATE=deposit_date).DEPOSIT_AMOUNT
@@ -120,7 +123,10 @@ def hosp_debit(patient, day):
     
     try:
         deposit_date = dateutil.parser.parse(this_date.strftime('%m/%d/%Y')).date()
-        deposit_amount = PATIENT_DEPOSIT.objects.get(PATIENT_ID=patient, DEPOSIT_DATE=deposit_date).DEPOSIT_AMOUNT
+        deposit_amount_all = PATIENT_DEPOSIT.objects.filter(PATIENT_ID=patient, DEPOSIT_DATE__lte=deposit_date)
+        deposit_amount = 0
+        for depo in deposit_amount_all:
+            deposit_amount += depo.DEPOSIT_AMOUNT
     except:
         deposit_amount = 0
     total_exp = 0
@@ -133,7 +139,7 @@ def hosp_debit(patient, day):
             total_exp += expense.OTHER_EXPENSE
     except:
         pass
-    return str(deposit_amount - total_exp - room_cost - patient.PATIENT_PHYSICIAN_CHARGE)
+    return str(deposit_amount - total_exp - room_cost - (patient.PATIENT_PHYSICIAN_CHARGE*(day+2)))
 
 @register.simple_tag
 def physician_visit(patient):
@@ -264,10 +270,18 @@ def phy_cost_total(patient):
     return str(phy_cost*days1)
 
 @register.simple_tag
+def get_discount(patient):
+    patient_bill = PATIENT_BILL.objects.get(PATIENT_ID=patient)
+    discount = patient_bill.PATIENT_DISCOUNT
+    return str(discount)
+
+@register.simple_tag
 def total_bill(patient):
     phy_cost = patient.PATIENT_PHYSICIAN_CHARGE
     room_cost = patient.PATIENT_ROOM_PRICE
     patient_admit_datetime = patient.PATIENT_ADMIT_DATE_TIME
+    patient_bill = PATIENT_BILL.objects.get(PATIENT_ID=patient)
+    discount = patient_bill.PATIENT_DISCOUNT
     if patient.PATIENT_DISCHARGE_DATE_TIME != None:
         # last_datetime = patient.PATIENT_DISCHARGE_DATE_TIME
         # last_date = dateutil.parser.parse(last_datetime.strftime('%d/%m/%Y')).date()
@@ -276,4 +290,4 @@ def total_bill(patient):
         last_date = datetime.now().date()
     patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
     days1 = (last_date - patient_admit_date).days + 1
-    return str((phy_cost+room_cost)*days1 + phy_cost)
+    return str((phy_cost+room_cost)*days1 + phy_cost -discount)
