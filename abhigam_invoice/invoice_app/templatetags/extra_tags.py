@@ -115,7 +115,7 @@ def hosp_debit(patient, day):
     this_date = patient_admit_date + timedelta(days=int(day))
     this_date_credit = patient_admit_date + timedelta(days=int(day+1))
     expenses = PATIENT_DAILY_EXPENSE.objects.filter(PATIENT_ID=patient, EXPENSE_DATETIME__lte=this_date_credit)
-    room_cost = patient.PATIENT_ROOM_PRICE*day
+    print(day)
     # try:
     #     deposit_date = dateutil.parser.parse(ind_exp.strftime('%m/%d/%Y')).date()
     #     deposit_amount = PATIENT_DEPOSIT.objects.get(PATIENT_ID=patient, DEPOSIT_DATE=deposit_date).DEPOSIT_AMOUNT
@@ -140,7 +140,7 @@ def hosp_debit(patient, day):
             total_exp += expense.OTHER_EXPENSE
     except:
         pass
-    return str(deposit_amount - total_exp - room_cost - (patient.PATIENT_PHYSICIAN_CHARGE*(day+2)))
+    return str(deposit_amount - (total_exp + (patient.PATIENT_PHYSICIAN_CHARGE*(day+1)) + patient.PATIENT_ROOM_PRICE*(day+1)))
 
 @register.simple_tag
 def physician_visit(patient):

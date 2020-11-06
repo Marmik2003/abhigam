@@ -87,7 +87,36 @@ Abhigam | All Patients Profile
                             </tr>
                         </tbody>
                     </table>
+                    <br><br><br>
+                    <h1>Total</h1>
+                    <table class="table table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Patient Name</th>
+                                <th>Days</th>
+                                <th>Initial Physician Charge</th>
+                                <th>Total Physician Charge</th>
+                                <th>Room Cost</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for patient in patients %}
+                            <tr>
+                                <td>{{ patient.PATIENT_ID }}</td>
+                                <td>{{ patient.PATIENT_NAME }}</td>
+                                <td>{% patientdays patient %}</td>
+                                <td>{% phy_cost patient %}</td>
+                                <td>{% phy_cost_total patient %}</td>
+                                <td>{% total_room_cost patient %}</td>
+                                <td>{% total_individual patient %}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
+
                 <div id="editor"></div>
                 
                 <div class="row-md-12 px-2 py-3">
