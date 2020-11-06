@@ -81,6 +81,10 @@ Abhigam | All Patients Profile
                                 </td>
                             </tr>
                             {% endfor %}
+                            <tr>
+                                <td colspan="13"><b>Total</b></td>
+                                <td id="total"></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -96,14 +100,16 @@ Abhigam | All Patients Profile
 </section>
 <script>
     $(document).ready(function(){
+        var total = 0;
         for(i=1;i <= {{patients.count}}; i++){
             var debitval = parseInt($('#debit_'+i).text());
+            total += debitval;
             if(debitval<0){
                 $('#debit_'+i).css({'color':'red', 'font-size':'18px', 'font-weight':'800'});
             }
         }
         console.log('ok');
-
+        $("#total").text(total);
     });
 
 </script>
