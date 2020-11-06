@@ -113,7 +113,8 @@ def other_pt(patient, day):
 def hosp_debit(patient, day):
     patient_admit_date = patient.PATIENT_ADMIT_DATE_TIME.date()
     this_date = patient_admit_date + timedelta(days=int(day))
-    expenses = PATIENT_DAILY_EXPENSE.objects.filter(PATIENT_ID=patient, EXPENSE_DATETIME__date=this_date)
+    this_date_credit = patient_admit_date + timedelta(days=int(day+1))
+    expenses = PATIENT_DAILY_EXPENSE.objects.filter(PATIENT_ID=patient, EXPENSE_DATETIME__lte=this_date_credit)
     room_cost = patient.PATIENT_ROOM_PRICE*day
     # try:
     #     deposit_date = dateutil.parser.parse(ind_exp.strftime('%m/%d/%Y')).date()
@@ -154,7 +155,20 @@ def physician_visit(patient):
     days1 = (last_date - patient_admit_date).days
     return str(days1+1)
 
-
+@register.simple_tag
+def total_individual(patient):
+    phy_cost = patient.PATIENT_PHYSICIAN_CHARGE
+    room_cost = patient.PATIENT_ROOM_PRICE
+    patient_admit_datetime = patient.PATIENT_ADMIT_DATE_TIME
+    if patient.PATIENT_DISCHARGE_DATE_TIME != None:
+        # last_datetime = patient.PATIENT_DISCHARGE_DATE_TIME
+        # last_date = dateutil.parser.parse(last_datetime.strftime('%d/%m/%Y')).date()
+        last_date = patient.PATIENT_DISCHARGE_DATE_TIME.date()
+    else:
+        last_date = datetime.now().date()
+    patient_admit_date = dateutil.parser.parse(patient_admit_datetime.strftime('%m/%d/%Y')).date()
+    days1 = (last_date - patient_admit_date).days + 1
+    return str((phy_cost+room_cost)*days1 + phy_cost)
 
 @register.simple_tag
 def deposit_total(patient):
@@ -281,7 +295,10 @@ def total_bill(patient):
     room_cost = patient.PATIENT_ROOM_PRICE
     patient_admit_datetime = patient.PATIENT_ADMIT_DATE_TIME
     patient_bill = PATIENT_BILL.objects.get(PATIENT_ID=patient)
-    discount = patient_bill.PATIENT_DISCOUNT
+    try:
+        discount = patient_bill.PATIENT_DISCOUNT
+    except:
+        discount = 0
     if patient.PATIENT_DISCHARGE_DATE_TIME != None:
         # last_datetime = patient.PATIENT_DISCHARGE_DATE_TIME
         # last_date = dateutil.parser.parse(last_datetime.strftime('%d/%m/%Y')).date()

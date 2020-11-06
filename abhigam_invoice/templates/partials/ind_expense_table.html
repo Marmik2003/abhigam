@@ -46,6 +46,30 @@ Patient ID: {{patient.PATIENT_ID}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb
         </tr>
     </tbody>
 </table>
+<br><br>
+<div class="row-md-12">
+    <h1>Total cost</h1>
+</div>
+<table width="100%" class="table table-bordered table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>Total Days</th>
+            <th>Total Room Cost</th>
+            <th>Initial Physician Cost</th>
+            <th>Total Physician Cost</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>{% patientdays patient %}</b></td>
+            <td><b>{% total_room_cost patient %}</b></td>
+            <td><b>{% phy_cost patient %}</b></td>
+            <td><b>{% phy_cost_total patient %}</b></td>
+            <td><b>{% total_individual patient %}</b></td>
+        </tr>
+    </tbody>
+</table>
 <script>
     $(document).ready(function(){
         for(i=1;i <= {{days|length}}; i++){
